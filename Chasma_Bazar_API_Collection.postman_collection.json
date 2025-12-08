@@ -1,0 +1,2420 @@
+{
+  "info": {
+    "name": "Chasma Bazar API Collection",
+    "description": "Complete API collection for Chasma Bazar Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_postman_id": "chasma-bazar-api-2024",
+    "version": "1.0.0"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:5000/api",
+      "type": "string"
+    },
+    {
+      "key": "access_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refresh_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "admin_token",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "product_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "frame_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "company_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "order_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "address_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "cart_item_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "review_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "rating_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "wishlist_item_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "payment_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "promo_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "discount_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "rayban_company_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "oakley_company_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "gucci_company_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "prada_company_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "titan_company_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "aviator_frame_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "wayfarer_frame_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "round_frame_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "cateye_frame_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "sport_frame_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "welcome_discount_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "rayban_discount_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "luxury_discount_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "women_discount_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "flat_discount_id",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Admin Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin_user\",\n  \"firstName\": \"Admin\",\n  \"lastName\": \"User\",\n  \"email\": \"admin@chasmabazar.com\",\n  \"password\": \"Admin@123456\",\n  \"phone\": \"9876543210\",\n  \"role\": \"admin\",\n  \"dateOfBirth\": \"1985-01-01\",\n  \"gender\": \"male\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/signup",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Signup",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"john_doe\",\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"Password@123\",\n  \"phone\": \"9876543210\",\n  \"dateOfBirth\": \"1990-01-15\",\n  \"gender\": \"male\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/signup",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Refresh Token",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refreshToken\": \"{{refresh_token}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/refresh-token",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "refresh-token"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Logout",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/logout",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Logout All Devices",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/logout-all",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "logout-all"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User Sessions",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/sessions?activeOnly=true",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "activeOnly",
+                  "value": "true"
+                }
+              ],
+              "path": [
+                "auth",
+                "sessions"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products?page=1&limit=10&category=Men",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "category",
+                  "value": "Men"
+                }
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products/search?q=sunglasses&page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "sunglasses"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "products",
+                "search"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products/{{product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "{{product_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Product (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Classic Black Frame\",\n  \"sku\": \"CBF-001\",\n  \"type\": \"optical\",\n  \"frameType\": \"{{frame_id}}\",\n  \"userCategory\": \"Men\",\n  \"description\": \"Classic and elegant black frame with premium acetate material\",\n  \"price\": 2999,\n  \"productDiscount\": 10,\n  \"company\": \"{{company_id}}\",\n  \"colors\": [\n    {\n      \"color\": \"Black\",\n      \"hexCode\": \"#000000\",\n      \"images\": [\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://example.com/black-front.jpg\",\n          \"public_id\": \"black_front_123\",\n          \"alt\": \"Black frame front view\"\n        },\n        {\n          \"type\": \"3d\",\n          \"url\": \"https://example.com/black-3d.jpg\",\n          \"public_id\": \"black_3d_123\",\n          \"alt\": \"Black frame 3D view\"\n        }\n      ]\n    }\n  ],\n  \"stock\": 50,\n  \"specsType\": \"eyeglasses\",\n  \"model\": \"Classic-001\",\n  \"material\": \"Acetate\",\n  \"weight\": 25,\n  \"dimensions\": {\"height\": 45, \"width\": 140, \"depth\": 145},\n  \"warranty\": {\"duration\": 12, \"durationType\": \"months\", \"description\": \"1 year manufacturer warranty\"},\n  \"isFeatured\": false,\n  \"tags\": [\"classic\", \"formal\", \"black\", \"acetate\"],\n  \"ageGroup\": \"adults\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Product (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 2499,\n  \"productDiscount\": 15,\n  \"stock\": 45,\n  \"isFeatured\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products/{{product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "{{product_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Product (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/products/{{product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "{{product_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Product with Discounts (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ray-Ban Aviator Classic\",\n  \"sku\": \"RB-AVI-3025-001\",\n  \"type\": \"sunglasses\",\n  \"frameType\": \"{{aviator_frame_id}}\",\n  \"userCategory\": \"Men\",\n  \"description\": \"The iconic Ray-Ban Aviator Classic sunglasses feature timeless design with gold metal frame and crystal green lenses. Perfect for any occasion.\",\n  \"price\": 8990,\n  \"productDiscount\": 0,\n  \"appliedDiscounts\": [\n    \"{{rayban_discount_id}}\"\n  ],\n  \"colors\": [\n    {\n      \"color\": \"Gold/Green\",\n      \"hexCode\": \"#FFD700\",\n      \"images\": [\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800\",\n          \"alt\": \"Gold/Green Ray-Ban Aviator front view\"\n        },\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1473496169904-658ba7c44d8a?w=800\",\n          \"alt\": \"Gold/Green Ray-Ban Aviator side view\"\n        },\n        {\n          \"type\": \"3d\",\n          \"url\": \"https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800\",\n          \"alt\": \"Gold/Green Ray-Ban Aviator 3D view\"\n        }\n      ]\n    },\n    {\n      \"color\": \"Black/Grey\",\n      \"hexCode\": \"#000000\",\n      \"images\": [\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1577803645773-f96470509666?w=800\",\n          \"alt\": \"Black/Grey Ray-Ban Aviator front view\"\n        },\n        {\n          \"type\": \"3d\",\n          \"url\": \"https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=800\",\n          \"alt\": \"Black/Grey Ray-Ban Aviator 3D view\"\n        }\n      ]\n    }\n  ],\n  \"stock\": 150,\n  \"company\": \"{{rayban_company_id}}\",\n  \"specsType\": \"sunglasses\",\n  \"model\": \"RB3025\",\n  \"material\": \"Metal\",\n  \"weight\": 150,\n  \"dimensions\": {\n    \"height\": 58,\n    \"width\": 135,\n    \"depth\": 145\n  },\n  \"warranty\": {\n    \"duration\": 2,\n    \"durationType\": \"years\",\n    \"description\": \"2 years manufacturer warranty\"\n  },\n  \"isFeatured\": true,\n  \"tags\": [\n    \"aviator\",\n    \"classic\",\n    \"iconic\",\n    \"metal\",\n    \"pilot\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Product Discounts (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appliedDiscounts\": [\n    \"{{discount_id}}\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products/{{product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "{{product_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Remove Discounts from Product (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"appliedDiscounts\": []\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products/{{product_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "{{product_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Gucci Women Sunglasses (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Gucci Round Vintage Sunglasses\",\n  \"sku\": \"GUC-RND-0061-003\",\n  \"type\": \"sunglasses\",\n  \"frameType\": \"{{round_frame_id}}\",\n  \"userCategory\": \"Women\",\n  \"description\": \"Elegant Gucci round sunglasses with metal frame and gradient lenses. Features iconic Gucci logo on temples.\",\n  \"price\": 24990,\n  \"productDiscount\": 0,\n  \"appliedDiscounts\": [\n    \"{{women_discount_id}}\",\n    \"{{luxury_discount_id}}\"\n  ],\n  \"colors\": [\n    {\n      \"color\": \"Gold/Brown\",\n      \"hexCode\": \"#FFD700\",\n      \"images\": [\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=800\",\n          \"alt\": \"Gold/Brown Gucci round sunglasses\"\n        },\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1509695507497-903c140c43b0?w=800\",\n          \"alt\": \"Gold/Brown Gucci round side view\"\n        },\n        {\n          \"type\": \"3d\",\n          \"url\": \"https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=800\",\n          \"alt\": \"Gold/Brown Gucci 3D view\"\n        }\n      ]\n    },\n    {\n      \"color\": \"Silver/Grey\",\n      \"hexCode\": \"#C0C0C0\",\n      \"images\": [\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1574258495973-f010dfbb5371?w=800\",\n          \"alt\": \"Silver/Grey Gucci round sunglasses\"\n        },\n        {\n          \"type\": \"3d\",\n          \"url\": \"https://images.unsplash.com/photo-1556306535-0f09a537f0a3?w=800\",\n          \"alt\": \"Silver/Grey Gucci 3D view\"\n        }\n      ]\n    }\n  ],\n  \"stock\": 75,\n  \"company\": \"{{gucci_company_id}}\",\n  \"specsType\": \"sunglasses\",\n  \"model\": \"GG0061S\",\n  \"material\": \"Metal\",\n  \"weight\": 110,\n  \"dimensions\": {\n    \"height\": 47,\n    \"width\": 135,\n    \"depth\": 140\n  },\n  \"warranty\": {\n    \"duration\": 1,\n    \"durationType\": \"years\",\n    \"description\": \"1 year international warranty\"\n  },\n  \"isFeatured\": true,\n  \"tags\": [\n    \"gucci\",\n    \"luxury\",\n    \"round\",\n    \"vintage\",\n    \"designer\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Oakley Sport Sunglasses (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Oakley Radar EV Sport\",\n  \"sku\": \"OAK-RAD-9208-920\",\n  \"type\": \"sunglasses\",\n  \"frameType\": \"{{sport_frame_id}}\",\n  \"userCategory\": \"Men\",\n  \"description\": \"High-performance Oakley sport sunglasses with Prizm lens technology. Perfect for cycling, running, and outdoor activities.\",\n  \"price\": 14990,\n  \"productDiscount\": 0,\n  \"appliedDiscounts\": [\n    \"{{welcome_discount_id}}\"\n  ],\n  \"colors\": [\n    {\n      \"color\": \"Matte Black\",\n      \"hexCode\": \"#2B2B2B\",\n      \"images\": [\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1509695507497-903c140c43b0?w=800\",\n          \"alt\": \"Matte Black Oakley sport front\"\n        },\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1577803645773-f96470509666?w=800\",\n          \"alt\": \"Matte Black Oakley sport side\"\n        },\n        {\n          \"type\": \"3d\",\n          \"url\": \"https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800\",\n          \"alt\": \"Matte Black Oakley 3D view\"\n        }\n      ]\n    },\n    {\n      \"color\": \"Polished White\",\n      \"hexCode\": \"#FFFFFF\",\n      \"images\": [\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800\",\n          \"alt\": \"Polished White Oakley sport front\"\n        },\n        {\n          \"type\": \"3d\",\n          \"url\": \"https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=800\",\n          \"alt\": \"Polished White Oakley 3D view\"\n        }\n      ]\n    }\n  ],\n  \"stock\": 120,\n  \"company\": \"{{oakley_company_id}}\",\n  \"specsType\": \"sunglasses\",\n  \"model\": \"OO9208\",\n  \"material\": \"Carbon Fiber\",\n  \"weight\": 95,\n  \"dimensions\": {\n    \"height\": 60,\n    \"width\": 148,\n    \"depth\": 138\n  },\n  \"warranty\": {\n    \"duration\": 2,\n    \"durationType\": \"years\",\n    \"description\": \"2 years manufacturer warranty\"\n  },\n  \"isFeatured\": true,\n  \"tags\": [\n    \"oakley\",\n    \"sport\",\n    \"performance\",\n    \"cycling\",\n    \"prizm\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Kids Sunglasses (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Titan Eye+ Kids Fun Sunglasses\",\n  \"sku\": \"TIT-KID-3001-BLU\",\n  \"type\": \"sunglasses\",\n  \"frameType\": \"{{wayfarer_frame_id}}\",\n  \"userCategory\": \"Kids\",\n  \"description\": \"Colorful and durable sunglasses designed for kids. UV protection with shatterproof lenses.\",\n  \"price\": 1490,\n  \"productDiscount\": 20,\n  \"appliedDiscounts\": [\n    \"{{welcome_discount_id}}\"\n  ],\n  \"colors\": [\n    {\n      \"color\": \"Blue\",\n      \"hexCode\": \"#0000FF\",\n      \"images\": [\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1577803645773-f96470509666?w=800\",\n          \"alt\": \"Blue kids sunglasses\"\n        },\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800\",\n          \"alt\": \"Blue kids sunglasses side\"\n        }\n      ]\n    },\n    {\n      \"color\": \"Pink\",\n      \"hexCode\": \"#FFC0CB\",\n      \"images\": [\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1577803645773-f96470509666?w=800\",\n          \"alt\": \"Pink kids sunglasses\"\n        }\n      ]\n    },\n    {\n      \"color\": \"Yellow\",\n      \"hexCode\": \"#FFFF00\",\n      \"images\": [\n        {\n          \"type\": \"normal\",\n          \"url\": \"https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800\",\n          \"alt\": \"Yellow kids sunglasses\"\n        }\n      ]\n    }\n  ],\n  \"stock\": 300,\n  \"company\": \"{{titan_company_id}}\",\n  \"specsType\": \"sunglasses\",\n  \"model\": \"TIT3001\",\n  \"material\": \"Plastic\",\n  \"weight\": 80,\n  \"dimensions\": {\n    \"height\": 42,\n    \"width\": 120,\n    \"depth\": 125\n  },\n  \"warranty\": {\n    \"duration\": 6,\n    \"durationType\": \"months\",\n    \"description\": \"6 months warranty\"\n  },\n  \"isFeatured\": false,\n  \"tags\": [\n    \"kids\",\n    \"children\",\n    \"colorful\",\n    \"durable\",\n    \"uv-protection\"\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/products",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Discount Management",
+      "item": [
+        {
+          "name": "Create Discount (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Summer Sale 20%\",\n  \"description\": \"20% discount for summer season\",\n  \"discountType\": \"percentage\",\n  \"discountValue\": 20,\n  \"maxDiscount\": 1000,\n  \"applicableOn\": \"global\",\n  \"priority\": 10,\n  \"canStackWithOther\": false,\n  \"canStackWithPromo\": true,\n  \"startDate\": \"2024-12-01T00:00:00Z\",\n  \"endDate\": \"2024-12-31T23:59:59Z\",\n  \"isActive\": true,\n  \"isAutoApplied\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/discounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get All Discounts (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/discounts?isActive=true&page=1&limit=20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts"
+              ],
+              "query": [
+                {
+                  "key": "isActive",
+                  "value": "true"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "20"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Active Discounts (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/discounts/active",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts",
+                "active"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Single Discount (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/discounts/{{discount_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts",
+                "{{discount_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Discount (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discountValue\": 25,\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/discounts/{{discount_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts",
+                "{{discount_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Toggle Discount Status (Admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/discounts/{{discount_id}}/toggle-status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts",
+                "{{discount_id}}",
+                "toggle-status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Discount (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/discounts/{{discount_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts",
+                "{{discount_id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Company Discount (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ray-Ban 15% Off\",\n  \"description\": \"15% off all Ray-Ban products\",\n  \"discountType\": \"percentage\",\n  \"discountValue\": 15,\n  \"applicableOn\": \"company\",\n  \"applicableCompanies\": [\n    \"{{company_id}}\"\n  ],\n  \"priority\": 15,\n  \"startDate\": \"2024-12-01T00:00:00Z\",\n  \"endDate\": \"2024-12-31T23:59:59Z\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/discounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Frame Discount (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Aviator Frames 10% Off\",\n  \"description\": \"10% off all aviator frames\",\n  \"discountType\": \"percentage\",\n  \"discountValue\": 10,\n  \"applicableOn\": \"frame\",\n  \"applicableFrames\": [\n    \"{{frame_id}}\"\n  ],\n  \"priority\": 8,\n  \"startDate\": \"2024-12-01T00:00:00Z\",\n  \"endDate\": \"2024-12-31T23:59:59Z\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/discounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Product Discount (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Special Product Discount\",\n  \"description\": \"Flat ₹500 off on specific product\",\n  \"discountType\": \"fixed\",\n  \"discountValue\": 500,\n  \"applicableOn\": \"product\",\n  \"applicableProducts\": [\n    \"{{product_id}}\"\n  ],\n  \"priority\": 20,\n  \"startDate\": \"2024-12-01T00:00:00Z\",\n  \"endDate\": \"2024-12-31T23:59:59Z\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/discounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Category Discount (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Women's Collection 20% Off\",\n  \"description\": \"20% off all women's products\",\n  \"discountType\": \"percentage\",\n  \"discountValue\": 20,\n  \"maxDiscount\": 1500,\n  \"applicableOn\": \"category\",\n  \"applicableCategories\": [\n    \"Women\"\n  ],\n  \"priority\": 12,\n  \"startDate\": \"2024-12-01T00:00:00Z\",\n  \"endDate\": \"2024-12-31T23:59:59Z\",\n  \"isActive\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/discounts",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Frames",
+      "item": [
+        {
+          "name": "Get All Frames",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/frames?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "frames"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Frame Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/frames/{{frame_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "frames",
+                "{{frame_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Frame (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Wayfarer\",\n  \"shape\": \"wayfarer\",\n  \"material\": \"acetate\",\n  \"color\": \"Black\",\n  \"size\": \"52mm\",\n  \"width\": \"145mm\",\n  \"dimensions\": \"52-18-145\",\n  \"bridgeSize\": \"18mm\",\n  \"templeLength\": \"145mm\",\n  \"weight\": 28,\n  \"price\": 500,\n  \"frameDiscount\": 5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/frames",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "frames"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Frame (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"size\": \"51mm\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/frames/{{frame_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "frames",
+                "{{frame_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Frame (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/frames/{{frame_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "frames",
+                "{{frame_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Companies",
+      "item": [
+        {
+          "name": "Get All Companies",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/companies?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "companies"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Company Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/companies/{{company_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies",
+                "{{company_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Company (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Premium Eyewear Co.\",\n  \"description\": \"Premium eyewear brand specializing in designer frames\",\n  \"pinCode\": \"110001\",\n  \"email\": \"contact@premiumeyewear.com\",\n  \"phone\": \"9876543210\",\n  \"address\": {\n    \"street\": \"123 Business Park\",\n    \"city\": \"Mumbai\",\n    \"state\": \"Maharashtra\",\n    \"country\": \"India\",\n    \"pinCode\": \"110001\"\n  },\n  \"logo\": {\n    \"url\": \"https://example.com/logo.png\",\n    \"public_id\": \"logo_123\"\n  },\n  \"establishedYear\": 2010,\n  \"rating\": 4.5,\n  \"totalRatings\": 120,\n  \"weblinks\": [{\"url\": \"https://example.com\", \"label\": \"Website\"}]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/companies",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Company (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/companies/{{company_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies",
+                "{{company_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Company (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/companies/{{company_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies",
+                "{{company_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cart",
+      "item": [
+        {
+          "name": "Add to Cart",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{product_id}}\",\n  \"quantity\": 1\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/cart",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Cart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cart?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "cart"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Cart Summary",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cart/summary",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart",
+                "summary"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Cart Item",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 2\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/cart/{{cart_item_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart",
+                "{{cart_item_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Remove from Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cart/{{cart_item_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart",
+                "{{cart_item_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Clear Cart",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/cart",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Orders",
+      "item": [
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{product_id}}\",\n  \"quantity\": 2,\n  \"addressId\": \"{{address_id}}\",\n  \"pricing\": {\n    \"productPrice\": 2999,\n    \"discount\": 299,\n    \"tax\": 485,\n    \"shippingCharges\": 0,\n    \"totalAmount\": 3185\n  }\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders?page=1&limit=10&status=pending",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "status",
+                  "value": "pending"
+                }
+              ],
+              "path": [
+                "orders"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Order Details",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders/{{order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "{{order_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Track Order",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/orders/{{order_id}}/track",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "{{order_id}}",
+                "track"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Order Status (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"shipped\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/orders/{{order_id}}/status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "{{order_id}}",
+                "status"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Cancel Order",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{}"
+            },
+            "url": {
+              "raw": "{{base_url}}/orders/{{order_id}}/cancel",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "{{order_id}}",
+                "cancel"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Request Refund",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"reason\": \"defective_product\",\n  \"description\": \"Product has scratches on lens\",\n  \"images\": [\"https://example.com/image1.jpg\"]\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/orders/{{order_id}}/refund",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "{{order_id}}",
+                "refund"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payments",
+      "item": [
+        {
+          "name": "Record Payment",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"{{order_id}}\",\n  \"paymentMethod\": \"credit_card\",\n  \"amount\": 2999,\n  \"transactionId\": \"TXN123456\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/payments",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Order Payment",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payments/{{order_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments",
+                "{{order_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User Payment History",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payments/user/history?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "payments",
+                "user",
+                "history"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Payment Status (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"success\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/payments/{{payment_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments",
+                "{{payment_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Payment Statistics (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/payments/stats",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments",
+                "stats"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Promo Codes",
+      "item": [
+        {
+          "name": "Create Promo Code (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SUMMER20\",\n  \"description\": \"Summer sale 20% off\",\n  \"discountType\": \"percentage\",\n  \"discountValue\": 20,\n  \"maxDiscount\": 1000,\n  \"minOrderValue\": 2000,\n  \"usageLimit\": 100,\n  \"startDate\": \"2024-06-01T00:00:00Z\",\n  \"endDate\": \"2024-08-31T23:59:59Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/promos",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Active Promo Codes",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/promos?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "promos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Promo Code Details",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/promos/{{promo_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos",
+                "{{promo_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Search Promo by Code",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/promos/search?code=SUMMER20",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "code",
+                  "value": "SUMMER20"
+                }
+              ],
+              "path": [
+                "promos",
+                "search"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Apply Promo Code",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"code\": \"SUMMER20\",\n  \"orderId\": \"{{order_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/promos/apply",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos",
+                "apply"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Promo Code (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"discountValue\": 25\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/promos/{{promo_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos",
+                "{{promo_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Deactivate Promo Code (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/promos/{{promo_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos",
+                "{{promo_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Reviews",
+      "item": [
+        {
+          "name": "Create Review",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{product_id}}\",\n  \"review\": \"Great quality product, highly recommended!\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/reviews",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product Reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/reviews/product/{{product_id}}?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "reviews",
+                "product",
+                "{{product_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Review",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"review\": \"Updated review text\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/reviews/{{review_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews",
+                "{{review_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Review",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/reviews/{{review_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews",
+                "{{review_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Ratings",
+      "item": [
+        {
+          "name": "Create Rating",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{product_id}}\",\n  \"rating\": 5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ratings",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ratings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Product Ratings",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/ratings/product/{{product_id}}?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "ratings",
+                "product",
+                "{{product_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Rating",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"rating\": 4\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/ratings/{{rating_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ratings",
+                "{{rating_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Rating",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/ratings/{{rating_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ratings",
+                "{{rating_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Wishlist",
+      "item": [
+        {
+          "name": "Add to Wishlist",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{product_id}}\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/wishlist",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wishlist"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Wishlist",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/wishlist?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "wishlist"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Remove from Wishlist",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/wishlist/{{wishlist_item_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wishlist",
+                "{{wishlist_item_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Addresses",
+      "item": [
+        {
+          "name": "Create Address",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"addressType\": \"home\",\n  \"address\": \"123 Main Street, Apt 4B\",\n  \"city\": \"Mumbai\",\n  \"state\": \"Maharashtra\",\n  \"country\": \"India\",\n  \"pincode\": \"110001\",\n  \"phone\": \"9876543210\",\n  \"alternatePhone\": \"9876543211\",\n  \"landmark\": \"Near Central Park\",\n  \"isDefault\": true\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/addresses",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "addresses"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get User Addresses",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/addresses?page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "addresses"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Address",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"address\": \"456 Oak Avenue\",\n  \"city\": \"Delhi\",\n  \"state\": \"Delhi\",\n  \"pincode\": \"110002\",\n  \"isDefault\": false\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/addresses/{{address_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "addresses",
+                "{{address_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Address",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/addresses/{{address_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "addresses",
+                "{{address_id}}"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Health Check",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/health",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "health"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
