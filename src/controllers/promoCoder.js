@@ -131,7 +131,7 @@ const promoCodeController = {
   applyPromoCode: async (req, res) => {
     try {
       const { code, orderId } = req.body;
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
 
       if (!code || !orderId) {
         return badRequestError(res, 'Code and order ID are required');

@@ -16,7 +16,7 @@ const lastSeenProductController = {
   trackProductView: async (req, res) => {
     try {
       const { productId } = req.params;
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       // Validate ObjectId
       if (!validateObjectId(productId)) {
@@ -60,7 +60,7 @@ const lastSeenProductController = {
   // Get user's browsing history
   getUserBrowsingHistory: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
       const { page = 1, limit = 10, sortBy = 'lastViewedAt' } = req.query;
 
       // Validate pagination
@@ -99,7 +99,7 @@ const lastSeenProductController = {
   // Get most viewed products by user
   getMostViewedProducts: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
       const { limit = 5 } = req.query;
 
       const parsedLimit = Math.min(parseInt(limit) || 5, 50);
@@ -119,7 +119,7 @@ const lastSeenProductController = {
   // Get recently viewed products
   getRecentlyViewedProducts: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
       const { limit = 10 } = req.query;
 
       const parsedLimit = Math.min(parseInt(limit) || 10, 100);
@@ -139,7 +139,7 @@ const lastSeenProductController = {
   // Clear browsing history
   clearBrowsingHistory: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       const result = await LastSeenProduct.deleteMany({ userId });
 
@@ -155,7 +155,7 @@ const lastSeenProductController = {
   clearProductFromHistory: async (req, res) => {
     try {
       const { productId } = req.params;
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       // Validate ObjectId
       if (!validateObjectId(productId)) {
@@ -180,7 +180,7 @@ const lastSeenProductController = {
   // Get browsing history statistics
   getBrowsingStatistics: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       const totalProducts = await LastSeenProduct.countDocuments({ userId });
       const totalViews = await LastSeenProduct.aggregate([

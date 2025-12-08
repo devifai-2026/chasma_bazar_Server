@@ -21,7 +21,7 @@ const paymentController = {
         transactionId,
         paymentId: customPaymentId,
       } = req.body;
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
 
       if (!orderId || !paymentMethod || !amount) {
         return badRequestError(res, 'Order ID, payment method, and amount are required');
@@ -72,7 +72,7 @@ const paymentController = {
   getOrderPayment: async (req, res) => {
     try {
       const { orderId } = req.params;
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
 
       const orderValidation = validateObjectId(orderId);
       if (!orderValidation.isValid) {
@@ -103,7 +103,7 @@ const paymentController = {
 
   getUserPayments: async (req, res) => {
     try {
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
       const { page = 1, limit = 10 } = req.query;
 
       const { isValid, error, page: validPage, limit: validLimit } = validatePagination(page, limit);

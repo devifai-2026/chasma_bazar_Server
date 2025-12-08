@@ -1,6 +1,4 @@
 import Cart from '../models/Cart.js';
-import Product from '../models/Product.js';
-import User from '../models/User.js';
 import {
   successResponse,
   createdResponse,
@@ -15,7 +13,7 @@ const cartController = {
   addToCart: async (req, res) => {
     try {
       const { productId, quantity = 1 } = req.body;
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
 
       if (!productId) {
         return badRequestError(res, 'Product ID is required');
@@ -49,6 +47,14 @@ const cartController = {
       if (existingItem) {
         existingItem.quantity += quantity;
         await existingItem.save();
+        await existingItem.populate({
+          path: 'productId',
+          select: 'name price colors description images frameType company productDiscount stock',
+          populate: [
+            { path: 'frameType', select: 'name' },
+            { path: 'company', select: 'name logo' }
+          ]
+        });
         return successResponse(res, 200, 'Item quantity updated', existingItem);
       }
 
@@ -59,7 +65,14 @@ const cartController = {
       });
 
       await cartItem.save();
-      await cartItem.populate('productId', 'name price');
+      await cartItem.populate({
+        path: 'productId',
+        select: 'name price colors description images frameType company productDiscount stock',
+        populate: [
+          { path: 'frameType', select: 'name' },
+          { path: 'company', select: 'name logo' }
+        ]
+      });
 
       return createdResponse(res, 'Item added to cart', cartItem);
     } catch (error) {
@@ -69,7 +82,7 @@ const cartController = {
 
   getCart: async (req, res) => {
     try {
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
       const { page = 1, limit = 10 } = req.query;
 
       const userVerification = await verifyUserExists(userId);
@@ -85,7 +98,14 @@ const cartController = {
       const skip = (validPage - 1) * validLimit;
 
       const cartItems = await Cart.find({ userId, isDeleted: false })
-        .populate('productId', 'name price colors description')
+        .populate({
+          path: 'productId',
+          select: 'name price colors description images frameType company productDiscount stock isDeleted',
+          populate: [
+            { path: 'frameType', select: 'name' },
+            { path: 'company', select: 'name logo' }
+          ]
+        })
         .skip(skip)
         .limit(validLimit)
         .sort({ createdAt: -1 });
@@ -106,7 +126,7 @@ const cartController = {
     try {
       const { itemId } = req.params;
       const { quantity } = req.body;
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
 
       const validateId = validateObjectId(itemId);
       if (!validateId.isValid) {
@@ -134,7 +154,14 @@ const cartController = {
 
       cartItem.quantity = quantity;
       await cartItem.save();
-      await cartItem.populate('productId', 'name price');
+      await cartItem.populate({
+        path: 'productId',
+        select: 'name price colors description images frameType company productDiscount stock',
+        populate: [
+          { path: 'frameType', select: 'name' },
+          { path: 'company', select: 'name logo' }
+        ]
+      });
 
       return successResponse(res, 200, 'Cart item updated', cartItem);
     } catch (error) {
@@ -145,7 +172,7 @@ const cartController = {
   removeFromCart: async (req, res) => {
     try {
       const { itemId } = req.params;
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
 
       const validateId = validateObjectId(itemId);
       if (!validateId.isValid) {
@@ -178,7 +205,7 @@ const cartController = {
 
   clearCart: async (req, res) => {
     try {
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
 
       const userVerification = await verifyUserExists(userId);
       if (!userVerification.exists) {
@@ -198,7 +225,7 @@ const cartController = {
 
   getCartSummary: async (req, res) => {
     try {
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
 
       const userVerification = await verifyUserExists(userId);
       if (!userVerification.exists) {
@@ -206,7 +233,14 @@ const cartController = {
       }
 
       const cartItems = await Cart.find({ userId, isDeleted: false })
-        .populate('productId', 'name price productDiscount');
+        .populate({
+          path: 'productId',
+          select: 'name price colors description images frameType company productDiscount stock isDeleted',
+          populate: [
+            { path: 'frameType', select: 'name' },
+            { path: 'company', select: 'name logo' }
+          ]
+        });
 
       const summary = {
         itemCount: cartItems.length,

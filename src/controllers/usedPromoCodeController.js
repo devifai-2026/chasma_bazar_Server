@@ -16,7 +16,7 @@ const usedPromoCodeController = {
   recordPromoCodeUsage: async (req, res) => {
     try {
       const { promoCodeId, orderId, discountApplied } = req.body;
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       // Validate required fields
       if (!promoCodeId || !orderId || discountApplied === undefined) {
@@ -67,7 +67,7 @@ const usedPromoCodeController = {
   // Get user's promo code usage history
   getUserPromoCodeHistory: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
       const { page = 1, limit = 10 } = req.query;
 
       // Validate pagination
@@ -97,7 +97,7 @@ const usedPromoCodeController = {
   // Get promo code usage statistics
   getPromoCodeUsageStats: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       const stats = {
         totalPromoCodesUsed: 0,
@@ -167,7 +167,7 @@ const usedPromoCodeController = {
   hasUserUsedCode: async (req, res) => {
     try {
       const { promoCodeId } = req.params;
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       // Validate ObjectId
       if (!validateObjectId(promoCodeId)) {
@@ -192,7 +192,7 @@ const usedPromoCodeController = {
   getPromoCodesByOrder: async (req, res) => {
     try {
       const { orderId } = req.params;
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       // Validate ObjectId
       if (!validateObjectId(orderId)) {

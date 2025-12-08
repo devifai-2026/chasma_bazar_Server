@@ -7,7 +7,7 @@ const refundController = {
   createRefund: async (req, res) => {
     try {
       const { orderId, reason, description, images } = req.body;
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
 
       if (!orderId || !reason) {
         return badRequestError(res, 'Order ID and reason are required');
@@ -67,7 +67,7 @@ const refundController = {
 
   getUserRefunds: async (req, res) => {
     try {
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
       const { page = 1, limit = 10, status } = req.query;
 
       const { isValid, error, page: validPage, limit: validLimit } = validatePagination(page, limit);
@@ -105,7 +105,7 @@ const refundController = {
   getRefundById: async (req, res) => {
     try {
       const { id } = req.params;
-      const userId = req.user?.id || req.userId;
+      const userId = req.user.userId;
 
       const idValidation = validateObjectId(id);
       if (!idValidation.isValid) {
@@ -165,7 +165,7 @@ const refundController = {
     try {
       const { id } = req.params;
       const { refundAmount, approvalNotes } = req.body;
-      const adminId = req.user?.id || req.userId;
+      const adminId = req.user.userId;
 
       const idValidation = validateObjectId(id);
       if (!idValidation.isValid) {
@@ -202,7 +202,7 @@ const refundController = {
     try {
       const { id } = req.params;
       const { approvalNotes } = req.body;
-      const adminId = req.user?.id || req.userId;
+      const adminId = req.user.userId;
 
       const idValidation = validateObjectId(id);
       if (!idValidation.isValid) {

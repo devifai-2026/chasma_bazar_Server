@@ -62,6 +62,66 @@ export const addRating = async (req, res) => {
   }
 };
 
+export const updateRating = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { rating } = req.body;
+    const userId = req.user.userId;
+
+    if (!rating) {
+      return res.status(400).json({
+        success: false,
+        message: 'Rating is required',
+      });
+    }
+
+    if (!['1', '2', '3', '4', '5'].includes(rating.toString())) {
+      return res.status(400).json({
+        success: false,
+        message: 'Rating must be between 1 and 5',
+      });
+    }
+
+    const existingRating = await Rating.findById(id);
+
+    if (!existingRating) {
+      return res.status(404).json({
+        success: false,
+        message: 'Rating not found',
+      });
+    }
+
+    if (existingRating.isDeleted) {
+      return res.status(404).json({
+        success: false,
+        message: 'Rating has been deleted',
+      });
+    }
+
+    if (existingRating.userId.toString() !== userId) {
+      return res.status(403).json({
+        success: false,
+        message: 'You can only update your own ratings',
+      });
+    }
+
+    existingRating.rating = rating;
+    existingRating.updatedAt = new Date();
+    await existingRating.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Rating updated successfully',
+      data: existingRating,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
 export const deleteRating = async (req, res) => {
   try {
     const { id } = req.params;

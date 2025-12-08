@@ -11,7 +11,7 @@ const sessionManagementController = {
   // Get all active sessions for the user
   getActiveSessions: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       const sessions = await Session.getActiveSessionsForUser(userId);
 
@@ -34,7 +34,7 @@ const sessionManagementController = {
   // Get session statistics
   getSessionStats: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       const stats = await Session.getSessionStats(userId);
 
@@ -48,7 +48,7 @@ const sessionManagementController = {
   revokeSession: async (req, res) => {
     try {
       const { sessionId } = req.params;
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       // Validate ObjectId
       if (!validateObjectId(sessionId)) {
@@ -77,7 +77,7 @@ const sessionManagementController = {
   // Revoke all sessions except current
   revokeAllOtherSessions: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
       const currentSessionId = req.session._id;
 
       // Get all active sessions except current
@@ -103,7 +103,7 @@ const sessionManagementController = {
   // Revoke all sessions (logout from all devices)
   revokeAllSessions: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       const result = await Session.revokeAllUserSessions(userId, 'logout');
 
@@ -119,7 +119,7 @@ const sessionManagementController = {
   getSessionDetails: async (req, res) => {
     try {
       const { sessionId } = req.params;
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       // Validate ObjectId
       if (!validateObjectId(sessionId)) {
@@ -160,7 +160,7 @@ const sessionManagementController = {
   // Cleanup all expired sessions for current user
   cleanupExpiredUserSessions: async (req, res) => {
     try {
-      const userId = req.user._id;
+      const userId = req.user.userId;
 
       const result = await Session.deleteMany({
         userId,
