@@ -4,7 +4,7 @@
     "description": "Complete API collection for Chasma Bazar Backend",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "_postman_id": "chasma-bazar-api-2024",
-    "version": "1.0.0"
+    "version": "2.0.0"
   },
   "variable": [
     {
@@ -159,6 +159,11 @@
     },
     {
       "key": "flat_discount_id",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "banner_id",
       "value": "",
       "type": "string"
     }
@@ -969,7 +974,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"name\": \"Special Product Discount\",\n  \"description\": \"Flat ₹500 off on specific product\",\n  \"discountType\": \"fixed\",\n  \"discountValue\": 500,\n  \"applicableOn\": \"product\",\n  \"applicableProducts\": [\n    \"{{product_id}}\"\n  ],\n  \"priority\": 20,\n  \"startDate\": \"2024-12-01T00:00:00Z\",\n  \"endDate\": \"2024-12-31T23:59:59Z\",\n  \"isActive\": true\n}"
+              "raw": "{\n  \"name\": \"Special Product Discount\",\n  \"description\": \"Flat \u20b9500 off on specific product\",\n  \"discountType\": \"fixed\",\n  \"discountValue\": 500,\n  \"applicableOn\": \"product\",\n  \"applicableProducts\": [\n    \"{{product_id}}\"\n  ],\n  \"priority\": 20,\n  \"startDate\": \"2024-12-01T00:00:00Z\",\n  \"endDate\": \"2024-12-31T23:59:59Z\",\n  \"isActive\": true\n}"
             },
             "url": {
               "raw": "{{base_url}}/discounts",
@@ -1430,6 +1435,69 @@
               ]
             }
           }
+        },
+        {
+          "name": "Add to Cart (with Color)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{product_id}}\",\n  \"quantity\": 1,\n  \"color\": \"Black\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/cart",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Cart Item (with Color)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"quantity\": 2,\n  \"color\": \"Blue\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/cart/{{cart_item_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart",
+                "{{cart_item_id}}"
+              ]
+            }
+          }
         }
       ]
     },
@@ -1634,6 +1702,37 @@
                 "orders",
                 "{{order_id}}",
                 "refund"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Order (with Color)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{product_id}}\",\n  \"addressId\": \"{{address_id}}\",\n  \"color\": \"Black\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/orders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders"
               ]
             }
           }
@@ -2275,6 +2374,37 @@
               ]
             }
           }
+        },
+        {
+          "name": "Add to Wishlist (with Color)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{access_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": \"{{product_id}}\",\n  \"color\": \"Black\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/wishlist",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wishlist"
+              ]
+            }
+          }
         }
       ]
     },
@@ -2410,6 +2540,215 @@
               ],
               "path": [
                 "health"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Banners",
+      "item": [
+        {
+          "name": "Get Active Banners (Public)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/banners/active",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "active"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get All Banners (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/banners?page=1&limit=10&isActive=true",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                },
+                {
+                  "key": "isActive",
+                  "value": "true"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Banner by ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/banners/{{banner_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "{{banner_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Banner (Admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Summer Sale 2025\",\n  \"description\": \"Get 50% off on all sunglasses\",\n  \"image\": {\n    \"url\": \"https://example.com/banner.jpg\",\n    \"public_id\": \"banner_123\"\n  },\n  \"link\": \"/products/sale\",\n  \"buttonText\": \"Shop Now\",\n  \"priority\": 10,\n  \"isActive\": true,\n  \"startDate\": \"2025-01-01T00:00:00.000Z\",\n  \"endDate\": \"2025-12-31T23:59:59.000Z\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/banners",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Update Banner (Admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated Banner Title\",\n  \"isActive\": false,\n  \"priority\": 5\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/banners/{{banner_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "{{banner_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Toggle Banner Status (Admin)",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/banners/{{banner_id}}/toggle-status",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "{{banner_id}}",
+                "toggle-status"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Delete Banner (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/banners/{{banner_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "{{banner_id}}"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Permanently Delete Banner (Admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/banners/{{banner_id}}/permanent",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "{{banner_id}}",
+                "permanent"
               ]
             }
           }

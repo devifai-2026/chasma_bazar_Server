@@ -12,7 +12,7 @@ import { verifyProductExists, verifyUserExists } from '../utils/dataVerification
 const cartController = {
   addToCart: async (req, res) => {
     try {
-      const { productId, quantity = 1 } = req.body;
+      const { productId, quantity = 1, color } = req.body;
       const userId = req.user.userId;
 
       if (!productId) {
@@ -38,14 +38,27 @@ const cartController = {
         return badRequestError(res, 'Quantity must be at least 1');
       }
 
-      const existingItem = await Cart.findOne({
+      // Check for existing item with same product and color
+      const existingItemQuery = {
         userId,
         productId,
         isDeleted: false,
-      });
+      };
+
+      // If color is provided, check for matching color, otherwise match items without color
+      if (color) {
+        existingItemQuery.color = color;
+      } else {
+        existingItemQuery.$or = [{ color: { $exists: false } }, { color: null }, { color: '' }];
+      }
+
+      const existingItem = await Cart.findOne(existingItemQuery);
 
       if (existingItem) {
         existingItem.quantity += quantity;
+        if (color) {
+          existingItem.color = color;
+        }
         await existingItem.save();
         await existingItem.populate({
           path: 'productId',
@@ -62,6 +75,7 @@ const cartController = {
         userId,
         productId,
         quantity,
+        ...(color && { color }),
       });
 
       await cartItem.save();
@@ -125,7 +139,7 @@ const cartController = {
   updateCartItem: async (req, res) => {
     try {
       const { itemId } = req.params;
-      const { quantity } = req.body;
+      const { quantity, color } = req.body;
       const userId = req.user.userId;
 
       const validateId = validateObjectId(itemId);
@@ -153,6 +167,9 @@ const cartController = {
       }
 
       cartItem.quantity = quantity;
+      if (color !== undefined) {
+        cartItem.color = color;
+      }
       await cartItem.save();
       await cartItem.populate({
         path: 'productId',

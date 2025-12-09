@@ -12,7 +12,7 @@ import { verifyProductExists, verifyUserExists } from '../utils/dataVerification
 
 export const addToWishlist = async (req, res) => {
   try {
-    const { productId } = req.body;
+    const { productId, color } = req.body;
     const userId = req.user?.userId || req.userId;
 
     if (!productId) {
@@ -34,19 +34,30 @@ export const addToWishlist = async (req, res) => {
       return notFoundError(res, productVerification.error);
     }
 
-    const existingWishlist = await Wishlist.findOne({
+    // Check for existing wishlist item with same product and color
+    const existingWishlistQuery = {
       userId,
       productId,
       isDeleted: false
-    });
+    };
+
+    // If color is provided, check for matching color, otherwise match items without color
+    if (color) {
+      existingWishlistQuery.color = color;
+    } else {
+      existingWishlistQuery.$or = [{ color: { $exists: false } }, { color: null }, { color: '' }];
+    }
+
+    const existingWishlist = await Wishlist.findOne(existingWishlistQuery);
 
     if (existingWishlist) {
-      return badRequestError(res, 'Product already in wishlist');
+      return badRequestError(res, 'Product with this color already in wishlist');
     }
 
     const wishlist = new Wishlist({
       userId,
       productId,
+      ...(color && { color }),
     });
 
     await wishlist.save();

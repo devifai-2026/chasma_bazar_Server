@@ -20,6 +20,7 @@ import refundRoutes from './routes/refundRoutes.js';
 import lastSeenProductRoutes from './routes/lastSeenProductRoutes.js';
 import usedPromoCodeRoutes from './routes/usedPromoCodeRoutes.js';
 import sessionManagementRoutes from './routes/sessionManagementRoutes.js';
+import bannerRoutes from './routes/bannerRoutes.js';
 
 const app = express();
 
@@ -89,6 +90,7 @@ app.use('/api/refunds', refundRoutes);
 app.use('/api/browsing-history', lastSeenProductRoutes);
 app.use('/api/used-promos', usedPromoCodeRoutes);
 app.use('/api/sessions', sessionManagementRoutes);
+app.use('/api/banners', bannerRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

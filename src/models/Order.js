@@ -22,6 +22,10 @@ const orderSchema = new mongoose.Schema(
       min: 1,
       default: 1,
     },
+    color: {
+      type: String,
+      trim: true,
+    },
     address: {
       type: String,
       required: [true, 'Delivery address is required'],

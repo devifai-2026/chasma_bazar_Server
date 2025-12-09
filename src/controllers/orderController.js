@@ -4,7 +4,7 @@ import UserDeliveryAddress from '../models/UserDeliveryAddress.js';
 
 export const createOrder = async (req, res) => {
   try {
-    const { productId, addressId } = req.body;
+    const { productId, addressId, color } = req.body;
     const userId = req.user.userId;
 
     if (!productId || !addressId) {
@@ -43,6 +43,7 @@ export const createOrder = async (req, res) => {
       address: deliveryAddress.address,
       status: 'pending',
       isOrdered: true,
+      ...(color && { color }),
     });
 
     await order.save();

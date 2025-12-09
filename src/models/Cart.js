@@ -12,6 +12,10 @@ const cartSchema = new mongoose.Schema(
       ref: 'Product',
       required: [true, 'Product ID is required'],
     },
+    color: {
+      type: String,
+      trim: true,
+    },
     quantity: {
       type: Number,
       default: 1,
