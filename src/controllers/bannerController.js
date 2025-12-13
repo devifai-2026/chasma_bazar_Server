@@ -20,6 +20,7 @@ const bannerController = {
         buttonText,
         buttonLink,
         pages,
+        position,
         isActive,
         priority,
         startDate,
@@ -46,6 +47,7 @@ const bannerController = {
         buttonText,
         buttonLink,
         pages: pages && pages.length > 0 ? pages : ['all'],
+        position: position || 'top',
         isActive,
         priority: priority || 0,
         startDate,
@@ -114,7 +116,7 @@ const bannerController = {
   // Get active banners by page (Public endpoint)
   getActiveBannersByPage: async (req, res) => {
     try {
-      const { page } = req.query;
+      const { page, position } = req.query;
 
       if (!page) {
         return badRequestError(res, 'Page parameter is required');
@@ -125,8 +127,16 @@ const bannerController = {
         return badRequestError(res, `Page must be one of: ${validPages.join(', ')}`);
       }
 
-      const banners = await Banner.getActiveBannersByPage(page);
-      return successResponse(res, 200, `Active banners for ${page} page retrieved`, banners);
+      const validPositions = ['top', 'middle', 'bottom', 'sidebar', 'popup'];
+      if (position && !validPositions.includes(position)) {
+        return badRequestError(res, `Position must be one of: ${validPositions.join(', ')}`);
+      }
+
+      const banners = await Banner.getActiveBannersByPageAndPosition(page, position);
+      const message = position
+        ? `Active banners for ${page} page at ${position} position retrieved`
+        : `Active banners for ${page} page retrieved`;
+      return successResponse(res, 200, message, banners);
     } catch (error) {
       return errorResponse(res, 500, 'Error retrieving banners by page', error.message);
     }
@@ -165,6 +175,7 @@ const bannerController = {
         buttonText,
         buttonLink,
         pages,
+        position,
         isActive,
         priority,
         startDate,
@@ -194,6 +205,7 @@ const bannerController = {
       if (buttonText !== undefined) banner.buttonText = buttonText;
       if (buttonLink !== undefined) banner.buttonLink = buttonLink;
       if (pages !== undefined) banner.pages = pages;
+      if (position !== undefined) banner.position = position;
       if (isActive !== undefined) banner.isActive = isActive;
       if (priority !== undefined) banner.priority = priority;
       if (startDate !== undefined) banner.startDate = startDate;

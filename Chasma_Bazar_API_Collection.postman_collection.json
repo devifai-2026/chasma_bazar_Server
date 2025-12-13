@@ -375,21 +375,313 @@
               "query": [
                 {
                   "key": "page",
-                  "value": "1"
+                  "value": "1",
+                  "description": "Page number (default: 1)"
                 },
                 {
                   "key": "limit",
-                  "value": "10"
+                  "value": "10",
+                  "description": "Items per page (default: 10, max: 100)"
                 },
                 {
                   "key": "category",
-                  "value": "Men"
+                  "value": "Men",
+                  "description": "Filter by category: Men, Women, Kids",
+                  "disabled": true
+                },
+                {
+                  "key": "gender",
+                  "value": "Men",
+                  "description": "Alias for category: Men, Women, Kids",
+                  "disabled": true
+                },
+                {
+                  "key": "company",
+                  "value": "{{company_id}}",
+                  "description": "Filter by company ID (supports comma-separated IDs)",
+                  "disabled": true
+                },
+                {
+                  "key": "frameType",
+                  "value": "{{frame_id}}",
+                  "description": "Filter by frame type ID (supports comma-separated IDs)",
+                  "disabled": true
+                },
+                {
+                  "key": "frameShape",
+                  "value": "aviator",
+                  "description": "Filter by frame shape (supports comma-separated shapes)",
+                  "disabled": true
+                },
+                {
+                  "key": "frameSize",
+                  "value": "medium",
+                  "description": "Filter by frame size: small (130-135mm), medium (135-140mm), large (140-145mm), xlarge (145mm+)",
+                  "disabled": true
+                },
+                {
+                  "key": "minPrice",
+                  "value": "1000",
+                  "description": "Minimum price range filter",
+                  "disabled": true
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "5000",
+                  "description": "Maximum price range filter",
+                  "disabled": true
+                },
+                {
+                  "key": "material",
+                  "value": "Metal",
+                  "description": "Filter by material: Metal, Plastic, Acetate, Titanium, Stainless Steel, Aluminum, TR90, Carbon Fiber, Wood, Nylon, Polycarbonate, Mixed Materials (supports comma-separated)",
+                  "disabled": true
+                },
+                {
+                  "key": "search",
+                  "value": "aviator",
+                  "description": "Case-insensitive search in name, description, tags",
+                  "disabled": true
                 }
               ],
               "path": [
                 "products"
               ]
             }
+          }
+        },
+        {
+          "name": "Get Products - By Gender",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products?gender=Women&page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "gender",
+                  "value": "Women"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Products - Price Range",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products?minPrice=5000&maxPrice=15000&page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "minPrice",
+                  "value": "5000"
+                },
+                {
+                  "key": "maxPrice",
+                  "value": "15000"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Products - Search with Filters",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products?search=aviator&gender=Men&material=Metal&minPrice=2000&page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "search",
+                  "value": "aviator"
+                },
+                {
+                  "key": "gender",
+                  "value": "Men"
+                },
+                {
+                  "key": "material",
+                  "value": "Metal"
+                },
+                {
+                  "key": "minPrice",
+                  "value": "2000"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Products - By Frame Shape",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products?frameShape=wayfarer&page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "frameShape",
+                  "value": "wayfarer"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Products - By Frame Size",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products?frameSize=large&page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "frameSize",
+                  "value": "large",
+                  "description": "Options: small, medium, large, xlarge"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "products"
+              ]
+            },
+            "description": "Filter products by frame size based on width dimensions:\n\n- **small**: 130-135mm (Narrow fit)\n- **medium**: 135-140mm (Regular fit)\n- **large**: 140-145mm (Wide fit)\n- **xlarge**: 145mm+ (Extra wide fit)"
+          }
+        },
+        {
+          "name": "Get Products - Multiple Materials",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products?material=Metal,Plastic&category=Men&page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "material",
+                  "value": "Metal,Plastic"
+                },
+                {
+                  "key": "category",
+                  "value": "Men"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "products"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Material Types Reference",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/products?material=Acetate&page=1&limit=10",
+              "host": [
+                "{{base_url}}"
+              ],
+              "query": [
+                {
+                  "key": "material",
+                  "value": "Acetate",
+                  "description": "VALID MATERIALS: Metal | Plastic | Acetate | Titanium | Stainless Steel | Aluminum | TR90 | Carbon Fiber | Wood | Nylon | Polycarbonate | Mixed Materials"
+                },
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "10"
+                }
+              ],
+              "path": [
+                "products"
+              ]
+            },
+            "description": "Reference for all valid material enum values:\n\n**Premium Materials:**\n- Acetate: High-quality cellulose acetate (premium plastic)\n- Titanium: Lightweight, durable, hypoallergenic\n- Carbon Fiber: Ultra-lightweight, high-strength\n\n**Metal Materials:**\n- Metal: General metal frames\n- Stainless Steel: Strong, corrosion-resistant\n- Aluminum: Lightweight metal frames\n\n**Plastic Materials:**\n- Plastic: Standard plastic frames\n- TR90: Flexible thermoplastic (sport frames)\n- Nylon: Flexible, impact-resistant\n- Polycarbonate: Impact-resistant plastic\n\n**Specialty Materials:**\n- Wood: Natural wooden frames\n- Mixed Materials: Combination of materials\n\n**Multi-Material Filter:**\nUse comma-separated values for multiple materials:\n`?material=Metal,Acetate,Titanium`"
           }
         },
         {
@@ -466,7 +758,8 @@
               "path": [
                 "products"
               ]
-            }
+            },
+            "description": "Create a new product.\n\n**Material Field (ENUM):**\nThe `material` field accepts only these values:\n- Metal\n- Plastic\n- Acetate\n- Titanium\n- Stainless Steel\n- Aluminum\n- TR90\n- Carbon Fiber\n- Wood\n- Nylon\n- Polycarbonate\n- Mixed Materials\n\nAny other value will be rejected with a validation error."
           }
         },
         {
@@ -2567,6 +2860,35 @@
           }
         },
         {
+          "name": "Get Banners by Page (Public)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/banners/by-page?page=home&position=top",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "by-page"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "home",
+                  "description": "Page name: all, home, products, product-detail, cart, wishlist, checkout, orders, profile"
+                },
+                {
+                  "key": "position",
+                  "value": "top",
+                  "description": "Position: top, middle, bottom, sidebar, popup (optional)"
+                }
+              ]
+            }
+          }
+        },
+        {
           "name": "Get All Banners (Admin)",
           "request": {
             "method": "GET",
@@ -2637,7 +2959,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"title\": \"Summer Sale 2025\",\n  \"description\": \"Get 50% off on all sunglasses\",\n  \"image\": {\n    \"url\": \"https://example.com/banner.jpg\",\n    \"public_id\": \"banner_123\"\n  },\n  \"link\": \"/products/sale\",\n  \"buttonText\": \"Shop Now\",\n  \"priority\": 10,\n  \"isActive\": true,\n  \"startDate\": \"2025-01-01T00:00:00.000Z\",\n  \"endDate\": \"2025-12-31T23:59:59.000Z\"\n}"
+              "raw": "{\n  \"title\": \"Summer Sale 2025\",\n  \"description\": \"Get 50% off on all sunglasses\",\n  \"image\": \"https://example.com/banner.jpg\",\n  \"buttonText\": \"Shop Now\",\n  \"buttonLink\": \"/products/sale\",\n  \"pages\": [\"home\", \"products\"],\n  \"position\": \"top\",\n  \"priority\": 10,\n  \"isActive\": true,\n  \"startDate\": \"2025-01-01T00:00:00.000Z\",\n  \"endDate\": \"2025-12-31T23:59:59.000Z\"\n}"
             },
             "url": {
               "raw": "{{base_url}}/banners",
@@ -2668,7 +2990,7 @@
             ],
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"title\": \"Updated Banner Title\",\n  \"isActive\": false,\n  \"priority\": 5\n}"
+              "raw": "{\n  \"title\": \"Updated Banner Title\",\n  \"description\": \"Updated description\",\n  \"buttonLink\": \"/products/new-sale\",\n  \"pages\": [\"home\", \"cart\"],\n  \"position\": \"middle\",\n  \"isActive\": false,\n  \"priority\": 5\n}"
             },
             "url": {
               "raw": "{{base_url}}/banners/{{banner_id}}",

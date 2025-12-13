@@ -150,34 +150,258 @@ export const deleteProduct = async (req, res) => {
 
 export const getAllProducts = async (req, res) => {
   try {
-    const { category, company, frameType, page = 1, limit = 10 } = req.query;
+    const {
+      category,
+      company,
+      frameType,
+      frameShape,
+      frameSize,
+      minPrice,
+      maxPrice,
+      gender,
+      material,
+      search,
+      page = 1,
+      limit = 10,
+    } = req.query;
+
+    const pageNum = parseInt(page, 10);
+    const limitNum = parseInt(limit, 10);
+
+    if (isNaN(pageNum) || pageNum < 1) {
+      return res.status(400).json({
+        success: false,
+        message: 'Page must be a positive integer',
+      });
+    }
+
+    if (isNaN(limitNum) || limitNum < 1 || limitNum > 300) {
+      return res.status(400).json({
+        success: false,
+        message: 'Limit must be a positive integer between 1 and 300',
+      });
+    }
+
+    // Validate price range
+    if (minPrice && isNaN(Number(minPrice))) {
+      return res.status(400).json({
+        success: false,
+        message: 'minPrice must be a valid number',
+      });
+    }
+
+    if (maxPrice && isNaN(Number(maxPrice))) {
+      return res.status(400).json({
+        success: false,
+        message: 'maxPrice must be a valid number',
+      });
+    }
+
+    if (minPrice && maxPrice && Number(minPrice) > Number(maxPrice)) {
+      return res.status(400).json({
+        success: false,
+        message: 'minPrice cannot be greater than maxPrice',
+      });
+    }
+
+    // Validate gender/category
+    const validCategories = ['Men', 'Women', 'Kids'];
+    if (category && !validCategories.includes(category)) {
+      return res.status(400).json({
+        success: false,
+        message: `category must be one of: ${validCategories.join(', ')}`,
+      });
+    }
+
+    if (gender && !validCategories.includes(gender)) {
+      return res.status(400).json({
+        success: false,
+        message: `gender must be one of: ${validCategories.join(', ')}`,
+      });
+    }
+
+    // Validate material
+    const validMaterials = [
+      'Metal',
+      'Plastic',
+      'Acetate',
+      'Titanium',
+      'Stainless Steel',
+      'Aluminum',
+      'TR90',
+      'Carbon Fiber',
+      'Wood',
+      'Nylon',
+      'Polycarbonate',
+      'Mixed Materials',
+    ];
+
+    if (material) {
+      const materials = material.includes(',')
+        ? material.split(',').map((m) => m.trim())
+        : [material.trim()];
+
+      const invalidMaterials = materials.filter((m) => !validMaterials.includes(m));
+
+      if (invalidMaterials.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid material(s): ${invalidMaterials.join(', ')}. Valid materials are: ${validMaterials.join(', ')}`,
+        });
+      }
+    }
+
+    // Validate frameSize
+    const validFrameSizes = ['small', 'medium', 'large', 'xlarge'];
+    if (frameSize && !validFrameSizes.includes(frameSize)) {
+      return res.status(400).json({
+        success: false,
+        message: `frameSize must be one of: ${validFrameSizes.join(', ')}`,
+      });
+    }
+
+    // ========== Build Filter Query ==========
 
     const filter = { isDeleted: false };
 
-    if (category) filter.userCategory = category;
-    if (company) filter.company = company;
-    if (frameType) filter.frameType = frameType;
+    const categoryValue = category || gender;
+    if (categoryValue) {
+      filter.userCategory = categoryValue;
+    }
+    if (company) {
+      filter.company = company.includes(',')
+        ? { $in: company.split(',').map((id) => id.trim()) }
+        : company.trim();
+    }
+
+    if (frameType) {
+      filter.frameType = frameType.includes(',')
+        ? { $in: frameType.split(',').map((id) => id.trim()) }
+        : frameType.trim();
+    }
+    if (frameShape) {
+      const Frame = mongoose.model('Frame');
+      const frameShapes = frameShape.includes(',')
+        ? frameShape.split(',').map((s) => s.trim())
+        : [frameShape.trim()];
+
+      const matchingFrames = await Frame.find({
+        shape: { $in: frameShapes },
+        isDeleted: false,
+      }).select('_id');
+
+      const frameIds = matchingFrames.map((frame) => frame._id);
+      if (frameIds.length > 0) {
+        if (filter.frameType) {
+          const existingIds = Array.isArray(filter.frameType.$in)
+            ? filter.frameType.$in
+            : [filter.frameType];
+          filter.frameType = {
+            $in: frameIds.filter((id) =>
+              existingIds.some((existingId) => existingId.toString() === id.toString())
+            ),
+          };
+        } else {
+          filter.frameType = { $in: frameIds };
+        }
+      } else {
+        return res.status(200).json({
+          success: true,
+          data: [],
+          totalPages: 0,
+          currentPage: pageNum,
+          total: 0,
+          filters: {
+            category: categoryValue,
+            company,
+            frameType,
+            frameShape,
+            frameSize,
+            priceRange: { min: minPrice, max: maxPrice },
+            gender,
+            material,
+            search,
+          },
+        });
+      }
+    }
+
+    // Frame size filter - based on dimensions.width
+    if (frameSize) {
+      const sizeRanges = {
+        small: { min: 130, max: 135 },
+        medium: { min: 135, max: 140 },
+        large: { min: 140, max: 145 },
+        xlarge: { min: 145, max: Infinity },
+      };
+
+      const range = sizeRanges[frameSize];
+      filter['dimensions.width'] = {
+        $gte: range.min,
+        $lte: range.max === Infinity ? 999999 : range.max,
+      };
+    }
+
+    // Price range filter
+    if (minPrice || maxPrice) {
+      filter.price = {};
+      if (minPrice) filter.price.$gte = Number(minPrice);
+      if (maxPrice) filter.price.$lte = Number(maxPrice);
+    }
+
+    if (material) {
+      const materials = material.includes(',')
+        ? material.split(',').map((m) => m.trim())
+        : [material.trim()];
+
+      filter.material =
+        materials.length > 1 ? { $in: materials } : materials[0];
+    }
+
+    if (search) {
+      const searchRegex = new RegExp(search.trim(), 'i');
+      filter.$or = [
+        { name: searchRegex },
+        { description: searchRegex },
+        { tags: { $in: [searchRegex] } },
+      ];
+    }
 
     const products = await Product.find(filter)
-      .populate('frameType', 'name size width dimensions')
-      .populate('company', 'description pinCode')
-      .limit(limit * 1)
-      .skip((page - 1) * limit)
+      .populate('frameType', 'name size width dimensions shape material')
+      .populate('company', 'name description')
+      .sort({ createdAt: -1 })
+      .limit(limitNum)
+      .skip((pageNum - 1) * limitNum)
       .exec();
 
-    const count = await Product.countDocuments(filter);
+    const totalCount = await Product.countDocuments(filter);
+
 
     res.status(200).json({
       success: true,
       data: products,
-      totalPages: Math.ceil(count / limit),
-      currentPage: page,
-      total: count,
+      totalPages: Math.ceil(totalCount / limitNum),
+      currentPage: pageNum,
+      total: totalCount,
+      filters: {
+        category: categoryValue,
+        company,
+        frameType,
+        frameShape,
+        frameSize,
+        priceRange: { min: minPrice, max: maxPrice },
+        gender,
+        material,
+        search,
+      },
     });
   } catch (error) {
+    console.error('Error in getAllProducts:', error);
     res.status(500).json({
       success: false,
-      message: error.message,
+      message: 'An error occurred while fetching products',
+      error: process.env.NODE_ENV === 'development' ? error.message : undefined,
     });
   }
 };

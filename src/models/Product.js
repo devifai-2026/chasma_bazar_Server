@@ -83,6 +83,23 @@ const productSchema = new mongoose.Schema(
     },
     material: {
       type: String,
+      enum: {
+        values: [
+          'Metal',
+          'Plastic',
+          'Acetate',
+          'Titanium',
+          'Stainless Steel',
+          'Aluminum',
+          'TR90',
+          'Carbon Fiber',
+          'Wood',
+          'Nylon',
+          'Polycarbonate',
+          'Mixed Materials',
+        ],
+        message: '{VALUE} is not a valid material type',
+      },
     },
     weight: {
       type: Number,

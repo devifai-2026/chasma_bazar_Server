@@ -33,6 +33,14 @@ const bannerSchema = new mongoose.Schema(
         message: '{VALUE} is not a valid page'
       },
     },
+    position: {
+      type: String,
+      default: 'top',
+      enum: {
+        values: ['top', 'middle', 'bottom', 'sidebar', 'popup'],
+        message: '{VALUE} is not a valid position'
+      },
+    },
     isActive: {
       type: Boolean,
       default: true,
@@ -78,10 +86,10 @@ bannerSchema.methods.isCurrentlyActive = function () {
   return this.isActive && !this.isDeleted && isDateValid;
 };
 
-// Static method to get active banners by page
-bannerSchema.statics.getActiveBannersByPage = function (page = 'all') {
+// Static method to get active banners by page and position
+bannerSchema.statics.getActiveBannersByPageAndPosition = function (page = 'all', position = null) {
   const now = new Date();
-  return this.find({
+  const query = {
     isActive: true,
     isDeleted: false,
     pages: { $in: ['all', page] },
@@ -101,7 +109,19 @@ bannerSchema.statics.getActiveBannersByPage = function (page = 'all') {
         ],
       },
     ],
-  }).sort({ priority: -1, createdAt: -1 });
+  };
+
+  // Add position filter if provided
+  if (position) {
+    query.position = position;
+  }
+
+  return this.find(query).sort({ priority: -1, createdAt: -1 });
+};
+
+// Static method to get active banners by page (all positions)
+bannerSchema.statics.getActiveBannersByPage = function (page = 'all') {
+  return this.getActiveBannersByPageAndPosition(page, null);
 };
 
 // Static method to get all active banners
