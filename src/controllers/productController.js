@@ -368,8 +368,9 @@ export const getAllProducts = async (req, res) => {
     }
 
     const products = await Product.find(filter)
+      .select('name price description colors stock material dimensions weight warranty averageRating totalReviews totalRatings type userCategory specsType model tags isFeatured productDiscount frameType company sku')
       .populate('frameType', 'name size width dimensions shape material')
-      .populate('company', 'name description')
+      .populate('company', 'name description logo')
       .sort({ createdAt: -1 })
       .limit(limitNum)
       .skip((pageNum - 1) * limitNum)

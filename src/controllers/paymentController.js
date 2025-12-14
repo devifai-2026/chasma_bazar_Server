@@ -10,6 +10,7 @@ import {
 } from '../utils/response.js';
 import { validateObjectId, validatePagination } from '../utils/validation.js';
 import { verifyOrderExists } from '../utils/dataVerification.js';
+import { v4 as uuidv4 } from 'uuid';
 
 const paymentController = {
   recordPayment: async (req, res) => {
@@ -50,7 +51,7 @@ const paymentController = {
       const payment = new Payment({
         orderId,
         userId,
-        paymentId: customPaymentId || `PAY-${Date.now()}`,
+        paymentId: customPaymentId || `PAY-${uuidv4()}`,
         paymentMethod,
         amount,
         currency: 'INR',
