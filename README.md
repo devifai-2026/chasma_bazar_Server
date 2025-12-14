@@ -321,30 +321,3 @@ Every operation verifies:
   "dotenv": "^16.3.1"
 }
 ```
-
----
-
-## 🤝 Contributing
-
-To extend this project:
-
-1. **Add New Feature**
-   - Create model in `src/models/`
-   - Create controller in `src/controllers/`
-   - Create routes in `src/routes/`
-   - Register routes in `server.js`
-
-2. **Add Validation**
-   - Add to `src/utils/validation.js`
-   - Add data verification to controller
-
-3. **Update Documentation**
-   - Update API_ENDPOINTS_SUMMARY.md
-   - Add Postman requests
-
----
----
-
-**Last Updated:** November 2024
-**Version:** 1.0.0
-**Status:** Production Ready ✅
