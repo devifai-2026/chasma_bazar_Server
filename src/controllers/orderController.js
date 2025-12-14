@@ -1,6 +1,7 @@
 import Order from '../models/Order.js';
 import Product from '../models/Product.js';
 import UserDeliveryAddress from '../models/UserDeliveryAddress.js';
+import { v4 as uuidv4 } from 'uuid';
 
 export const createOrder = async (req, res) => {
   try {
@@ -106,8 +107,12 @@ export const createOrder = async (req, res) => {
       });
     }
 
+    // Generate unique order ID using UUID
+    const orderId = `ORD-${uuidv4()}`;
+
     // Create order
     const order = new Order({
+      orderId,
       userId,
       productId,
       quantity: orderQuantity,
@@ -188,7 +193,20 @@ export const getOrder = async (req, res) => {
     const userId = req.user.userId;
 
     const order = await Order.findOne({ _id: id, isDeleted: false })
-      .populate('productId')
+      .populate({
+        path: 'productId',
+        select: 'name price description colors stock material dimensions weight warranty averageRating totalReviews type userCategory specsType model tags isFeatured productDiscount frameType company',
+        populate: [
+          {
+            path: 'frameType',
+            select: 'name shape material size width dimensions bridgeSize templeLength weight price frameDiscount',
+          },
+          {
+            path: 'company',
+            select: 'name description logo email phone address establishedYear rating totalRatings',
+          },
+        ],
+      })
       .populate('userId', 'username email phone');
 
     if (!order) {
