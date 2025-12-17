@@ -8,5 +8,6 @@ router.put('/:id', authenticate, reviewController.updateReview);
 router.delete('/:id', authenticate, reviewController.deleteReview);
 router.get('/product/:productId', reviewController.getProductReviews);
 router.get('/user/all', authenticate, reviewController.getUserReviews);
+router.get('/random/good', reviewController.getRandomGoodReviews);
 
 export default router;

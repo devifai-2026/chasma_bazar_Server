@@ -1,5 +1,6 @@
 import Review from '../models/Review.js';
 import Product from '../models/Product.js';
+import Rating from '../models/Rating.js';
 
 export const createReview = async (req, res) => {
   try {
@@ -158,6 +159,111 @@ export const getUserReviews = async (req, res) => {
     res.status(200).json({
       success: true,
       data: reviews,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+export const getRandomGoodReviews = async (req, res) => {
+  try {
+    const limit = parseInt(req.query.limit) || 10;
+    const minRating = parseFloat(req.query.minRating) || 4;
+
+    const goodReviews = await Review.aggregate([
+      {
+        $match: {
+          isDeleted: false,
+        },
+      },
+      {
+        $lookup: {
+          from: 'ratings',
+          let: { userId: '$userId', productId: '$productId' },
+          pipeline: [
+            {
+              $match: {
+                $expr: {
+                  $and: [
+                    { $eq: ['$userId', '$$userId'] },
+                    { $eq: ['$productId', '$$productId'] },
+                    { $eq: ['$isDeleted', false] },
+                    { $gte: ['$rating', minRating] },
+                  ],
+                },
+              },
+            },
+          ],
+          as: 'userRating',
+        },
+      },
+      {
+        $match: {
+          userRating: { $ne: [] },
+        },
+      },
+      {
+        $unwind: '$userRating',
+      },
+      {
+        $sample: { size: limit },
+      },
+      {
+        $lookup: {
+          from: 'users',
+          localField: 'userId',
+          foreignField: '_id',
+          as: 'user',
+        },
+      },
+      {
+        $unwind: '$user',
+      },
+      {
+        $lookup: {
+          from: 'products',
+          localField: 'productId',
+          foreignField: '_id',
+          as: 'product',
+        },
+      },
+      {
+        $unwind: '$product',
+      },
+      {
+        $project: {
+          _id: 1,
+          review: 1,
+          images: 1,
+          helpfulCount: 1,
+          isVerifiedPurchase: 1,
+          createdAt: 1,
+          updatedAt: 1,
+          user: {
+            _id: '$user._id',
+            username: '$user.username',
+            email: '$user.email',
+          },
+          product: {
+            _id: '$product._id',
+            name: '$product.name',
+            price: '$product.price',
+          },
+          rating: '$userRating.rating',
+        },
+      },
+      {
+        $sort: { createdAt: -1 },
+      },
+    ]);
+
+    res.status(200).json({
+      success: true,
+      count: goodReviews.length,
+      data: goodReviews,
     });
   } catch (error) {
     res.status(500).json({
