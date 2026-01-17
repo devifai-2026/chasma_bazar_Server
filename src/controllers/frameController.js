@@ -1,14 +1,31 @@
 import Frame from '../models/Frame.js';
+import Discount from '../models/Discount.js';
 
 export const createFrame = async (req, res) => {
   try {
-    const { name, size, width, dimensions, frameDiscount } = req.body;
+    const { name, size, width, dimensions, frameDiscount, appliedDiscounts, ...otherFields } = req.body;
 
     if (!name || !size || !width || !dimensions) {
       return res.status(400).json({
         success: false,
-        message: 'All required fields must be provided',
+        message: 'All required fields must be provided (name, size, width, dimensions)',
       });
+    }
+
+
+    if (appliedDiscounts && appliedDiscounts.length > 0) {
+      const discounts = await Discount.find({
+        _id: { $in: appliedDiscounts },
+        isActive: true,
+        isDeleted: false,
+      });
+
+      if (discounts.length !== appliedDiscounts.length) {
+        return res.status(400).json({
+          success: false,
+          message: 'One or more discounts are invalid or inactive',
+        });
+      }
     }
 
     const frame = new Frame({
@@ -16,10 +33,16 @@ export const createFrame = async (req, res) => {
       size,
       width,
       dimensions,
-      frameDiscount: frameDiscount || '0',
+      frameDiscount: frameDiscount || 0,
+      appliedDiscounts: appliedDiscounts || [],
+      ...otherFields,
     });
 
     await frame.save();
+
+    if (appliedDiscounts && appliedDiscounts.length > 0) {
+      await frame.populate('appliedDiscounts');
+    }
 
     res.status(201).json({
       success: true,
@@ -37,12 +60,9 @@ export const createFrame = async (req, res) => {
 export const updateFrame = async (req, res) => {
   try {
     const { id } = req.params;
-    const updates = req.body;
+    const { appliedDiscounts, ...updates } = req.body;
 
-    const frame = await Frame.findByIdAndUpdate(id, updates, {
-      new: true,
-      runValidators: true,
-    });
+    const frame = await Frame.findById(id);
 
     if (!frame) {
       return res.status(404).json({
@@ -50,6 +70,34 @@ export const updateFrame = async (req, res) => {
         message: 'Frame not found',
       });
     }
+
+    // Validate appliedDiscounts if being updated
+    if (appliedDiscounts !== undefined) {
+      if (appliedDiscounts.length > 0) {
+        const discounts = await Discount.find({
+          _id: { $in: appliedDiscounts },
+          isActive: true,
+          isDeleted: false,
+        });
+
+        if (discounts.length !== appliedDiscounts.length) {
+          return res.status(400).json({
+            success: false,
+            message: 'One or more discounts are invalid or inactive',
+          });
+        }
+      }
+
+      frame.appliedDiscounts = appliedDiscounts;
+    }
+
+    // Update other fields
+    Object.keys(updates).forEach((key) => {
+      frame[key] = updates[key];
+    });
+
+    await frame.save();
+    await frame.populate('appliedDiscounts');
 
     res.status(200).json({
       success: true,
@@ -95,7 +143,8 @@ export const deleteFrame = async (req, res) => {
 
 export const getAllFrames = async (req, res) => {
   try {
-    const frames = await Frame.find({ isDeleted: false });
+    const frames = await Frame.find({ isDeleted: false })
+      .populate('appliedDiscounts', 'name discountType discountValue');
 
     res.status(200).json({
       success: true,
@@ -113,7 +162,8 @@ export const getFrame = async (req, res) => {
   try {
     const { id } = req.params;
 
-    const frame = await Frame.findOne({ _id: id, isDeleted: false });
+    const frame = await Frame.findOne({ _id: id, isDeleted: false })
+      .populate('appliedDiscounts');
 
     if (!frame) {
       return res.status(404).json({

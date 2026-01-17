@@ -4,6 +4,7 @@ const companySchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      required: [true, 'Company name is required'],
       trim: true,
     },
     description: {
@@ -32,11 +33,8 @@ const companySchema = new mongoose.Schema(
       },
       pinCode: {
         type: String,
+        required: [true, 'Pin code is required'],
       },
-    },
-    pinCode: {
-      type: String,
-      required: [true, 'Pin code is required'],
     },
     establishedYear: {
       type: Number,

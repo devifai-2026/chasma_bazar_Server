@@ -1,179 +1,23 @@
 import User from '../models/User.js';
 import { Types } from 'mongoose';
-
-// Helper function to get user statistics
-const getUsersStatistics = async () => {
-  const startOfMonth = new Date();
-  startOfMonth.setDate(1);
-  startOfMonth.setHours(0, 0, 0, 0);
-
-  const statistics = await Promise.all([
-    // Total users (non-deleted)
-    User.countDocuments({ isDeleted: false }),
-    
-    // Active users
-    User.countDocuments({ 
-      isDeleted: false, 
-      accountStatus: 'active' 
-    }),
-    
-    // Admin users
-    User.countDocuments({ 
-      isDeleted: false, 
-      role: 'admin' 
-    }),
-    
-    // New users this month
-    User.countDocuments({ 
-      isDeleted: false,
-      createdAt: { $gte: startOfMonth }
-    }),
-  ]);
-
-  return {
-    totalUsers: statistics[0],
-    activeUsers: statistics[1],
-    adminUsers: statistics[2],
-    newThisMonth: statistics[3],
-  };
-};
-
-// Validation functions
-const validatePagination = (query) => {
-  const { 
-    page = 1, 
-    limit = 10, 
-    search = '', 
-    role = '', 
-    status = '',
-    sortField = 'createdAt',
-    sortDirection = 'desc'
-  } = query;
-
-  const errors = [];
-  
-  // Validate page
-  const pageNum = parseInt(page);
-  if (isNaN(pageNum) || pageNum < 1) {
-    errors.push('Page must be a positive number');
-  }
-
-  // Validate limit
-  const limitNum = parseInt(limit);
-  if (isNaN(limitNum) || limitNum < 1 || limitNum > 100) {
-    errors.push('Limit must be between 1 and 100');
-  }
-
-  // Validate sort direction
-  if (!['asc', 'desc'].includes(sortDirection.toLowerCase())) {
-    errors.push('Sort direction must be "asc" or "desc"');
-  }
-
-  if (errors.length > 0) {
-    return { isValid: false, errors };
-  }
-
-  return {
-    isValid: true,
-    value: {
-      page: pageNum,
-      limit: limitNum,
-      search: search.trim(),
-      role: role.trim(),
-      status: status.trim(),
-      sortField: sortField.trim(),
-      sortDirection: sortDirection.toLowerCase(),
-    }
-  };
-};
-
-const validateUserData = (data, isUpdate = false) => {
-  const errors = [];
-
-  // Username validation
-  if (!isUpdate || data.username !== undefined) {
-    const username = isUpdate ? data.username || '' : data.username;
-    if (!username && !isUpdate) {
-      errors.push('Username is required');
-    } else if (username && (username.length < 3 || username.length > 30)) {
-      errors.push('Username must be between 3 and 30 characters');
-    }
-  }
-
-  // Email validation
-  if (!isUpdate || data.email !== undefined) {
-    const email = isUpdate ? data.email || '' : data.email;
-    if (!email && !isUpdate) {
-      errors.push('Email is required');
-    } else if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      errors.push('Invalid email format');
-    }
-  }
-
-  // Password validation (only for create)
-  if (!isUpdate && (!data.password || data.password.length < 6)) {
-    errors.push('Password must be at least 6 characters');
-  }
-
-  // Phone validation (optional)
-  if (data.phone && !/^[0-9]{10,15}$/.test(data.phone)) {
-    errors.push('Phone number must be 10-15 digits');
-  }
-
-  // Role validation
-  const validRoles = ['admin', 'user', 'moderator'];
-  if (data.role && !validRoles.includes(data.role.toLowerCase())) {
-    errors.push(`Role must be one of: ${validRoles.join(', ')}`);
-  }
-
-  // Status validation
-  const validStatuses = ['active', 'inactive', 'suspended'];
-  if (data.accountStatus && !validStatuses.includes(data.accountStatus.toLowerCase())) {
-    errors.push(`Status must be one of: ${validStatuses.join(', ')}`);
-  }
-
-  // Gender validation (optional)
-  const validGenders = ['male', 'female', 'other'];
-  if (data.gender && !validGenders.includes(data.gender.toLowerCase())) {
-    errors.push(`Gender must be one of: ${validGenders.join(', ')}`);
-  }
-
-  return errors;
-};
-
-// Response helper functions
-const successResponse = (res, data, message = 'Success', statusCode = 200) => {
-  return res.status(statusCode).json({
-    success: true,
-    message,
-    data,
-  });
-};
-
-const errorResponse = (res, message, error = null, statusCode = 500) => {
-  const response = {
-    success: false,
-    message,
-  };
-  
-  if (error && process.env.NODE_ENV === 'development') {
-    response.error = error;
-  }
-  
-  return res.status(statusCode).json(response);
-};
-
-const badRequestError = (res, message) => {
-  return errorResponse(res, message, null, 400);
-};
-
-const notFoundError = (res, message) => {
-  return errorResponse(res, message, null, 404);
-};
-
-const createdResponse = (res, data, message = 'Created successfully') => {
-  return successResponse(res, data, message, 201);
-};
+import {
+  successResponse,
+  badRequestError,
+  notFoundError,
+  createdResponse,
+  serverError,
+} from '../utils/response.js';
+import {
+  validateUserPagination,
+  validateUserData,
+} from '../utils/validation.js';
+import {
+  getUsersStatistics,
+  formatUserForResponse,
+  formatUserDetailForResponse,
+  buildUserFilter,
+  buildUserSort,
+} from '../utils/userHelpers.js';
 
 const userController = {
   /**
@@ -184,72 +28,33 @@ const userController = {
   getAllUsers: async (req, res) => {
     try {
       // Validate pagination parameters
-      const validationResult = validatePagination(req.query);
+      const validationResult = validateUserPagination(req.query);
       if (!validationResult.isValid) {
         return badRequestError(res, validationResult.errors.join(', '));
       }
 
       // Destructure validated values
-      const { 
-        page, 
-        limit, 
-        search, 
-        role, 
-        status, 
-        sortField, 
-        sortDirection 
+      const {
+        page,
+        limit,
+        search,
+        role,
+        status,
+        sortField,
+        sortDirection
       } = validationResult.value;
-      
-      // Build filter object - exclude deleted users by default
-      const filter = { isDeleted: false };
 
-      // Role filter
-      if (role && role !== 'all' && role !== '') {
-        filter.role = role.toLowerCase();
-      }
-
-      // Status filter
-      if (status && status !== 'all' && status !== '') {
-        filter.accountStatus = status.toLowerCase();
-      }
-
-      // Search filter
-      if (search && search.trim() !== '') {
-        const searchRegex = new RegExp(search.trim(), 'i');
-        filter.$or = [
-          { username: searchRegex },
-          { email: searchRegex },
-          { firstName: searchRegex },
-          { lastName: searchRegex },
-          { phone: { $regex: search.trim(), $options: 'i' } },
-        ];
-      }
+      // Build filter and sort objects
+      const filter = buildUserFilter({ search, role, status });
+      const sort = buildUserSort(sortField, sortDirection);
 
       // Calculate pagination
       const skip = (page - 1) * limit;
 
-      // Build sort object - map UI field names to database field names
-      const sort = {};
-      const fieldMap = {
-        'id': '_id',
-        'name': 'username',
-        'role': 'role',
-        'status': 'accountStatus',
-        'joinDate': 'createdAt',
-        'USER': 'username',
-        'ROLE': 'role',
-        'STATUS': 'accountStatus',
-        'JOIN_DATE': 'createdAt',
-        'CONTACT': 'email',
-      };
-      
-      const dbField = fieldMap[sortField] || sortField || 'createdAt';
-      sort[dbField] = sortDirection.toLowerCase() === 'asc' ? 1 : -1;
-
       // Execute query with pagination
       const [users, total] = await Promise.all([
         User.find(filter)
-          .select('-password') // Exclude password field
+          .select('-password')
           .sort(sort)
           .skip(skip)
           .limit(parseInt(limit)),
@@ -257,39 +62,9 @@ const userController = {
       ]);
 
       // Format users for UI response
-      const formattedUsers = users.map((user, index) => {
-        // Generate display ID like #001, #002, etc.
-        const displayId = `#${String(skip + index + 1).padStart(3, '0')}`;
-        
-        // Create full name
-        let fullName = user.username;
-        if (user.firstName || user.lastName) {
-          fullName = `${user.firstName || ''} ${user.lastName || ''}`.trim();
-        }
-        
-        return {
-          id: user._id,
-          displayId: displayId,
-          user: {
-            name: fullName,
-            username: user.username,
-            avatar: user.avatar?.url || null,
-          },
-          contact: {
-            email: user.email,
-            phone: user.phone || "N/A",
-            isEmailVerified: user.isEmailVerified,
-            isPhoneVerified: user.isPhoneVerified,
-          },
-          role: user.role.charAt(0).toUpperCase() + user.role.slice(1).toLowerCase(),
-          status: user.accountStatus.charAt(0).toUpperCase() + user.accountStatus.slice(1),
-          joinDate: user.createdAt,
-          lastLogin: user.lastLogin,
-          dateOfBirth: user.dateOfBirth,
-          gender: user.gender,
-          isDeleted: user.isDeleted,
-        };
-      });
+      const formattedUsers = users.map((user, index) =>
+        formatUserForResponse(user, skip, index)
+      );
 
       // Get statistics for the dashboard
       const statistics = await getUsersStatistics();
@@ -300,7 +75,7 @@ const userController = {
       const hasPrevPage = page > 1;
 
       // Return comprehensive response
-      return successResponse(res, {
+      return successResponse(res, 200, 'Users retrieved successfully', {
         users: formattedUsers,
         pagination: {
           currentPage: page,
@@ -313,11 +88,11 @@ const userController = {
           showingTo: Math.min(skip + limit, total),
         },
         statistics,
-      }, 'Users retrieved successfully');
+      });
 
     } catch (error) {
       console.error('Error fetching users:', error);
-      return errorResponse(res, 'Server error while fetching users', error.message, 500);
+      return serverError(res, 'Server error while fetching users', error.message);
     }
   },
 
@@ -329,10 +104,10 @@ const userController = {
   getUsersStatistics: async (req, res) => {
     try {
       const statistics = await getUsersStatistics();
-      return successResponse(res, statistics, 'Statistics retrieved successfully');
+      return successResponse(res, 200, 'Statistics retrieved successfully', statistics);
     } catch (error) {
       console.error('Error fetching statistics:', error);
-      return errorResponse(res, 'Server error while fetching statistics', error.message, 500);
+      return serverError(res, 'Server error while fetching statistics', error.message);
     }
   },
 
@@ -361,29 +136,12 @@ const userController = {
       }
 
       // Format user for detailed view
-      const formattedUser = {
-        id: user._id,
-        username: user.username,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
-        isEmailVerified: user.isEmailVerified,
-        phone: user.phone,
-        isPhoneVerified: user.isPhoneVerified,
-        avatar: user.avatar,
-        dateOfBirth: user.dateOfBirth,
-        gender: user.gender,
-        role: user.role.charAt(0).toUpperCase() + user.role.slice(1).toLowerCase(),
-        accountStatus: user.accountStatus.charAt(0).toUpperCase() + user.accountStatus.slice(1),
-        lastLogin: user.lastLogin,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      };
+      const formattedUser = formatUserDetailForResponse(user);
 
-      return successResponse(res, formattedUser, 'User retrieved successfully');
+      return successResponse(res, 200, 'User retrieved successfully', formattedUser);
     } catch (error) {
       console.error('Error fetching user:', error);
-      return errorResponse(res, 'Server error while fetching user', error.message, 500);
+      return serverError(res, 'Server error while fetching user', error.message);
     }
   },
 
@@ -426,7 +184,7 @@ const userController = {
         let field = 'username';
         if (existingUser.email === email.toLowerCase()) field = 'email';
         if (existingUser.phone === phone) field = 'phone';
-        
+
         return badRequestError(res, `User with this ${field} already exists`);
       }
 
@@ -447,10 +205,10 @@ const userController = {
       // Return user without password
       const userResponse = await User.findById(user._id).select('-password');
 
-      return createdResponse(res, userResponse, 'User created successfully');
+      return createdResponse(res, 'User created successfully', userResponse);
     } catch (error) {
       console.error('Error creating user:', error);
-      return errorResponse(res, 'Server error while creating user', error.message, 500);
+      return serverError(res, 'Server error while creating user', error.message);
     }
   },
 
@@ -489,7 +247,7 @@ const userController = {
           username: req.body.username,
           _id: { $ne: id }
         });
-        
+
         if (existingUsername) {
           return badRequestError(res, 'Username already exists');
         }
@@ -501,7 +259,7 @@ const userController = {
           email: req.body.email.toLowerCase(),
           _id: { $ne: id }
         });
-        
+
         if (existingEmail) {
           return badRequestError(res, 'Email already exists');
         }
@@ -517,7 +275,7 @@ const userController = {
       if (req.body.accountStatus !== undefined) user.accountStatus = req.body.accountStatus.toLowerCase();
       if (req.body.dateOfBirth !== undefined) user.dateOfBirth = req.body.dateOfBirth;
       if (req.body.gender !== undefined) user.gender = req.body.gender?.toLowerCase();
-      
+
       // If password is being updated, hash it
       if (req.body.password) {
         user.password = req.body.password;
@@ -528,10 +286,10 @@ const userController = {
       // Return updated user without password
       const updatedUser = await User.findById(id).select('-password');
 
-      return successResponse(res, updatedUser, 'User updated successfully');
+      return successResponse(res, 200, 'User updated successfully', updatedUser);
     } catch (error) {
       console.error('Error updating user:', error);
-      return errorResponse(res, 'Server error while updating user', error.message, 500);
+      return serverError(res, 'Server error while updating user', error.message);
     }
   },
 
@@ -564,10 +322,10 @@ const userController = {
       user.accountStatus = 'inactive';
       await user.save();
 
-      return successResponse(res, null, 'User deleted successfully');
+      return successResponse(res, 200, 'User deleted successfully', null);
     } catch (error) {
       console.error('Error deleting user:', error);
-      return errorResponse(res, 'Server error while deleting user', error.message, 500);
+      return serverError(res, 'Server error while deleting user', error.message);
     }
   },
 
@@ -598,10 +356,10 @@ const userController = {
       user.accountStatus = 'active';
       await user.save();
 
-      return successResponse(res, null, 'User restored successfully');
+      return successResponse(res, 200, 'User restored successfully', null);
     } catch (error) {
       console.error('Error restoring user:', error);
-      return errorResponse(res, 'Server error while restoring user', error.message, 500);
+      return serverError(res, 'Server error while restoring user', error.message);
     }
   },
 };

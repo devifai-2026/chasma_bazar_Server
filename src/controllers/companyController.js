@@ -2,23 +2,29 @@ import Company from '../models/Company.js';
 
 export const createCompany = async (req, res) => {
   try {
-    const { name, description, pinCode, weblinks, email, phone, address, logo, establishedYear, rating, totalRatings } = req.body;
+    const { name, description, address, weblinks, email, phone, logo, establishedYear, rating, totalRatings } = req.body;
 
-    if (!description || !pinCode) {
+    if (!name || !description) {
       return res.status(400).json({
         success: false,
-        message: 'Description and pinCode are required',
+        message: 'Name and description are required',
+      });
+    }
+
+    if (!address || !address.pinCode) {
+      return res.status(400).json({
+        success: false,
+        message: 'Address with pinCode is required',
       });
     }
 
     const company = new Company({
       name,
       description,
-      pinCode,
+      address,
       weblinks: weblinks || [],
       email,
       phone,
-      address,
       logo,
       establishedYear,
       rating,

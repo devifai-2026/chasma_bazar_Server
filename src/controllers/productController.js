@@ -1,5 +1,8 @@
+import mongoose from 'mongoose';
 import Product from '../models/Product.js';
 import Discount from '../models/Discount.js';
+import Frame from '../models/Frame.js';
+import Company from '../models/Company.js';
 
 export const createProduct = async (req, res) => {
   try {
@@ -9,6 +12,24 @@ export const createProduct = async (req, res) => {
       return res.status(400).json({
         success: false,
         message: 'All required fields must be provided',
+      });
+    }
+
+    // Validate frameType exists
+    const frameExists = await Frame.findOne({ _id: frameType, isDeleted: false });
+    if (!frameExists) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid frameType: Frame does not exist or has been deleted',
+      });
+    }
+
+    // Validate company exists
+    const companyExists = await Company.findOne({ _id: company, isDeleted: false });
+    if (!companyExists) {
+      return res.status(400).json({
+        success: false,
+        message: 'Invalid company: Company does not exist or has been deleted',
       });
     }
 
@@ -46,8 +67,10 @@ export const createProduct = async (req, res) => {
 
     await product.save();
 
-    // Populate discounts
+    // Populate all references
     await product.populate('appliedDiscounts');
+    await product.populate('frameType');
+    await product.populate('company');
 
     res.status(201).json({
       success: true,

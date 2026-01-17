@@ -1,4 +1,7 @@
 import Discount from '../models/Discount.js';
+import Product from '../models/Product.js';
+import Frame from '../models/Frame.js';
+import Company from '../models/Company.js';
 
 // Create discount (Admin only)
 export const createDiscount = async (req, res) => {
@@ -58,6 +61,74 @@ export const createDiscount = async (req, res) => {
       });
     }
 
+    if (applicableOn === 'product') {
+      if (!applicableProducts || applicableProducts.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'applicableProducts is required when applicableOn is "product"',
+        });
+      }
+
+      const products = await Product.find({ _id: { $in: applicableProducts }, isDeleted: false });
+      if (products.length !== applicableProducts.length) {
+        return res.status(400).json({
+          success: false,
+          message: 'One or more products do not exist or have been deleted',
+        });
+      }
+    }
+
+    if (applicableOn === 'frame') {
+      if (!applicableFrames || applicableFrames.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'applicableFrames is required when applicableOn is "frame"',
+        });
+      }
+
+      const frames = await Frame.find({ _id: { $in: applicableFrames }, isDeleted: false });
+      if (frames.length !== applicableFrames.length) {
+        return res.status(400).json({
+          success: false,
+          message: 'One or more frames do not exist or have been deleted',
+        });
+      }
+    }
+
+    if (applicableOn === 'company') {
+      if (!applicableCompanies || applicableCompanies.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'applicableCompanies is required when applicableOn is "company"',
+        });
+      }
+      // Validate companies exist
+      const companies = await Company.find({ _id: { $in: applicableCompanies }, isDeleted: false });
+      if (companies.length !== applicableCompanies.length) {
+        return res.status(400).json({
+          success: false,
+          message: 'One or more companies do not exist or have been deleted',
+        });
+      }
+    }
+
+    if (applicableOn === 'category') {
+      if (!applicableCategories || applicableCategories.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'applicableCategories is required when applicableOn is "category"',
+        });
+      }
+      const validCategories = ['Men', 'Women', 'Kids'];
+      const invalidCategories = applicableCategories.filter(cat => !validCategories.includes(cat));
+      if (invalidCategories.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid categories: ${invalidCategories.join(', ')}. Valid categories are: ${validCategories.join(', ')}`,
+        });
+      }
+    }
+
     // Create discount
     const discount = await Discount.create({
       name,
@@ -82,6 +153,11 @@ export const createDiscount = async (req, res) => {
       isAutoApplied: isAutoApplied || false,
       createdBy: req.user ? req.user.id : undefined,
     });
+
+    // Populate references
+    await discount.populate('applicableProducts', 'name');
+    await discount.populate('applicableFrames', 'name');
+    await discount.populate('applicableCompanies', 'name');
 
     res.status(201).json({
       success: true,
@@ -226,6 +302,71 @@ export const updateDiscount = async (req, res) => {
         return res.status(400).json({
           success: false,
           message: 'End date must be after start date',
+        });
+      }
+    }
+
+    if (updates.applicableOn === 'product' && updates.applicableProducts) {
+      if (updates.applicableProducts.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'applicableProducts cannot be empty when applicableOn is "product"',
+        });
+      }
+      const products = await Product.find({ _id: { $in: updates.applicableProducts }, isDeleted: false });
+      if (products.length !== updates.applicableProducts.length) {
+        return res.status(400).json({
+          success: false,
+          message: 'One or more products do not exist or have been deleted',
+        });
+      }
+    }
+
+    if (updates.applicableOn === 'frame' && updates.applicableFrames) {
+      if (updates.applicableFrames.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'applicableFrames cannot be empty when applicableOn is "frame"',
+        });
+      }
+      const frames = await Frame.find({ _id: { $in: updates.applicableFrames }, isDeleted: false });
+      if (frames.length !== updates.applicableFrames.length) {
+        return res.status(400).json({
+          success: false,
+          message: 'One or more frames do not exist or have been deleted',
+        });
+      }
+    }
+
+    if (updates.applicableOn === 'company' && updates.applicableCompanies) {
+      if (updates.applicableCompanies.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'applicableCompanies cannot be empty when applicableOn is "company"',
+        });
+      }
+      const companies = await Company.find({ _id: { $in: updates.applicableCompanies }, isDeleted: false });
+      if (companies.length !== updates.applicableCompanies.length) {
+        return res.status(400).json({
+          success: false,
+          message: 'One or more companies do not exist or have been deleted',
+        });
+      }
+    }
+
+    if (updates.applicableOn === 'category' && updates.applicableCategories) {
+      if (updates.applicableCategories.length === 0) {
+        return res.status(400).json({
+          success: false,
+          message: 'applicableCategories cannot be empty when applicableOn is "category"',
+        });
+      }
+      const validCategories = ['Men', 'Women', 'Kids'];
+      const invalidCategories = updates.applicableCategories.filter(cat => !validCategories.includes(cat));
+      if (invalidCategories.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid categories: ${invalidCategories.join(', ')}. Valid categories are: ${validCategories.join(', ')}`,
         });
       }
     }
