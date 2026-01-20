@@ -151,7 +151,7 @@ export const createDiscount = async (req, res) => {
       minQuantity: minQuantity || 1,
       isActive: isActive !== undefined ? isActive : true,
       isAutoApplied: isAutoApplied || false,
-      createdBy: req.user ? req.user.id : undefined,
+      createdBy: req.user ? req.user.userId : undefined,
     });
 
     // Populate references

@@ -107,10 +107,28 @@ export const deleteCompany = async (req, res) => {
 
 export const getAllCompanies = async (req, res) => {
   try {
-    const companies = await Company.find({ isDeleted: false });
+    const { name, page = 1, limit = 20 } = req.query;
+
+    const filter = { isDeleted: false };
+
+    if (name) {
+      filter.name = { $regex: name, $options: 'i' };
+    }
+
+    const companies = await Company.find(filter)
+      .sort({ createdAt: -1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await Company.countDocuments(filter);
 
     res.status(200).json({
       success: true,
+      count: companies.length,
+      total: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: parseInt(page),
       data: companies,
     });
   } catch (error) {
