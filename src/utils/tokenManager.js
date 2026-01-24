@@ -4,7 +4,8 @@ import Session from '../models/Session.js';
 // Access token: short-lived (15 minutes)
 const generateAccessToken = (userId, role) => {
   const accessTokenSecret = process.env.JWT_SECRET;
-  const accessTokenExpiry = process.env.ACCESS_TOKEN_EXPIRE || '15m';
+  // const accessTokenExpiry = process.env.ACCESS_TOKEN_EXPIRE || '2h';
+  const accessTokenExpiry = '2h';
 
   const token = jwt.sign(
     { userId, role, type: 'access' },
