@@ -10,6 +10,7 @@ import {
   paginatedResponse
 } from '../utils/response.js';
 import { validateObjectId, validatePagination } from '../utils/validation.js';
+import { calculateDiscounts } from '../utils/discountCalculator.js';
 
 const promoCodeController = {
   createPromoCode: async (req, res) => {
@@ -142,61 +143,52 @@ const promoCodeController = {
         return badRequestError(res, orderValidation.error);
       }
 
-      const order = await Order.findOne({ _id: orderId, userId, isDeleted: false });
+      const order = await Order.findOne({ _id: orderId, userId, isDeleted: false })
+        .populate('productId');
+
       if (!order) {
         return notFoundError(res, 'Order not found');
       }
 
-      const now = new Date();
-      const promoCode = await PromoCode.findOne({
-        code: code.toUpperCase(),
-        isActive: true,
-        startDate: { $lte: now },
-        endDate: { $gte: now },
-      });
-
-      if (!promoCode) {
-        return notFoundError(res, 'Promo code not found or expired');
+      if (order.promoCodeId) {
+        return badRequestError(res, 'This order already has a promo code applied');
       }
 
-      if (promoCode.usageCount >= promoCode.usageLimit) {
-        return badRequestError(res, 'Promo code usage limit exceeded');
-      }
-
-      const alreadyUsed = await UsedPromoCode.findOne({
+      const discountResult = await calculateDiscounts({
+        productId: order.productId._id,
+        quantity: order.quantity,
+        promoCode: code,
         userId,
-        promoCodeId: promoCode._id,
-        orderId,
       });
 
-      if (alreadyUsed) {
-        return badRequestError(res, 'Promo code already applied to this order');
+      if (!discountResult.success) {
+        return badRequestError(res, discountResult.error);
       }
 
-      let discount = 0;
-      if (promoCode.discountType === 'percentage') {
-        discount = (order.totalAmount * promoCode.discountValue) / 100;
-        if (promoCode.maxDiscount) {
-          discount = Math.min(discount, promoCode.maxDiscount);
-        }
-      } else {
-        discount = promoCode.discountValue;
-      }
+      const { pricing, appliedPromoCode } = discountResult;
+
+      order.pricing.discounts = pricing.discounts;
+      order.pricing.totalAmount = pricing.discountedAmount + order.pricing.tax + order.pricing.shippingCharges;
+      order.promoCodeId = appliedPromoCode._id;
+
+      await order.save();
+
+      await PromoCode.findByIdAndUpdate(appliedPromoCode._id, {
+        $inc: { usageCount: 1 },
+      });
 
       const usedPromo = new UsedPromoCode({
         userId,
-        promoCodeId: promoCode._id,
-        orderId,
-        discountApplied: discount,
+        promoCodeId: appliedPromoCode._id,
+        orderId: order._id,
+        discountApplied: pricing.discounts.promoCodeDiscount,
       });
-
       await usedPromo.save();
-      promoCode.usageCount += 1;
-      await promoCode.save();
 
-      return successResponse(res, 200, 'Promo code applied', {
-        discountAmount: discount,
-        totalAmount: order.totalAmount - discount,
+      return successResponse(res, 200, 'Promo code applied successfully', {
+        discountAmount: pricing.discounts.promoCodeDiscount,
+        totalAmount: order.pricing.totalAmount,
+        order,
       });
     } catch (error) {
       return errorResponse(res, 500, 'Error applying promo code', error.message);
@@ -285,6 +277,52 @@ const promoCodeController = {
       return successResponse(res, 200, 'Promo code found', promoCode);
     } catch (error) {
       return errorResponse(res, 500, 'Error searching promo code', error.message);
+    }
+  },
+
+  validatePromoCode: async (req, res) => {
+    try {
+      const { code, productId, quantity = 1 } = req.body;
+      const userId = req.user.userId;
+
+      if (!code || !productId) {
+        return badRequestError(res, 'Code and product ID are required');
+      }
+
+      const productValidation = validateObjectId(productId);
+      if (!productValidation.isValid) {
+        return badRequestError(res, productValidation.error);
+      }
+
+      const discountResult = await calculateDiscounts({
+        productId,
+        quantity: Number(quantity),
+        promoCode: code,
+        userId,
+      });
+
+      if (!discountResult.success) {
+        return badRequestError(res, discountResult.error);
+      }
+
+      const { pricing, appliedPromoCode } = discountResult;
+
+      return successResponse(res, 200, 'Promo code is valid', {
+        promoCode: {
+          code: appliedPromoCode.code,
+          description: appliedPromoCode.description,
+          discountType: appliedPromoCode.discountType,
+          discountValue: appliedPromoCode.discountValue,
+        },
+        pricing: {
+          subtotal: pricing.subtotal,
+          discounts: pricing.discounts,
+          finalAmount: pricing.discountedAmount,
+          savings: pricing.discounts.totalDiscount,
+        },
+      });
+    } catch (error) {
+      return errorResponse(res, 500, 'Error validating promo code', error.message);
     }
   },
 };

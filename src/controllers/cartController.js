@@ -8,6 +8,7 @@ import {
 } from '../utils/response.js';
 import { validateObjectId, validatePagination } from '../utils/validation.js';
 import { verifyProductExists, verifyUserExists } from '../utils/dataVerification.js';
+import { calculateDiscounts, calculateTax, calculateShipping } from '../utils/discountCalculator.js';
 
 const cartController = {
   addToCart: async (req, res) => {
@@ -243,6 +244,7 @@ const cartController = {
   getCartSummary: async (req, res) => {
     try {
       const userId = req.user.userId;
+      const { promoCode } = req.query;
 
       const userVerification = await verifyUserExists(userId);
       if (!userVerification.exists) {
@@ -262,31 +264,60 @@ const cartController = {
       const summary = {
         itemCount: cartItems.length,
         subtotal: 0,
+        totalProductDiscount: 0,
+        totalRuleBasedDiscount: 0,
+        totalPromoCodeDiscount: 0,
         totalDiscount: 0,
+        tax: 0,
+        shippingCharges: 0,
         total: 0,
         items: [],
       };
 
       for (const item of cartItems) {
-        const price = item.productId.price || 0;
-        const discount = parseFloat(item.productId.productDiscount || 0);
-        const itemSubtotal = price * item.quantity;
-        const itemDiscount = (itemSubtotal * discount) / 100;
-        const itemTotal = itemSubtotal - itemDiscount;
+        if (!item.productId || item.productId.isDeleted) {
+          continue;
+        }
 
-        summary.subtotal += itemSubtotal;
-        summary.totalDiscount += itemDiscount;
-        summary.total += itemTotal;
+        const discountResult = await calculateDiscounts({
+          productId: item.productId._id,
+          quantity: item.quantity,
+          promoCode: promoCode || null,
+          userId,
+        });
+
+        if (!discountResult.success) {
+          if (promoCode) {
+            return errorResponse(res, 400, discountResult.error);
+          }
+          continue;
+        }
+
+        const { pricing } = discountResult;
+
+        summary.subtotal += pricing.subtotal;
+        summary.totalProductDiscount += pricing.discounts.productDiscount;
+        summary.totalRuleBasedDiscount += pricing.discounts.ruleBasedDiscount;
+        summary.totalPromoCodeDiscount += pricing.discounts.promoCodeDiscount;
+        summary.totalDiscount += pricing.discounts.totalDiscount;
 
         summary.items.push({
           _id: item._id,
           product: item.productId,
           quantity: item.quantity,
-          subtotal: itemSubtotal,
-          discount: itemDiscount,
-          total: itemTotal,
+          color: item.color,
+          pricing: {
+            subtotal: pricing.subtotal,
+            discounts: pricing.discounts,
+            discountedAmount: pricing.discountedAmount,
+          },
         });
       }
+
+      const totalDiscountedAmount = summary.subtotal - summary.totalDiscount;
+      summary.tax = calculateTax(totalDiscountedAmount);
+      summary.shippingCharges = calculateShipping(totalDiscountedAmount, summary.itemCount);
+      summary.total = totalDiscountedAmount + summary.tax + summary.shippingCharges;
 
       return successResponse(res, 200, 'Cart summary retrieved', summary);
     } catch (error) {

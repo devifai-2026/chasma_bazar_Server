@@ -8,6 +8,7 @@ router.post('/', authenticate, authorize('admin'), promoCodeController.createPro
 router.get('/', promoCodeController.getActivePromoCodes);
 router.get('/search', promoCodeController.searchPromoByCode);
 router.get('/:id', promoCodeController.getPromoCode);
+router.post('/validate', authenticate, promoCodeController.validatePromoCode);
 router.post('/apply', authenticate, promoCodeController.applyPromoCode);
 router.put('/:id', authenticate, authorize('admin'), promoCodeController.updatePromoCode);
 router.delete('/:id', authenticate, authorize('admin'), promoCodeController.deactivatePromoCode);

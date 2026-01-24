@@ -1,11 +1,13 @@
 import Order from '../models/Order.js';
 import Product from '../models/Product.js';
 import UserDeliveryAddress from '../models/UserDeliveryAddress.js';
+import PromoCode from '../models/PromoCode.js';
 import { v4 as uuidv4 } from 'uuid';
+import { calculateDiscounts, calculateTax, calculateShipping } from '../utils/discountCalculator.js';
 
 export const createOrder = async (req, res) => {
   try {
-    const { productId, addressId, color, quantity, discount, tax, shippingCharges } = req.body;
+    const { productId, addressId, color, quantity, promoCode } = req.body;
     const userId = req.user.userId;
 
     // Validate required fields
@@ -84,33 +86,30 @@ export const createOrder = async (req, res) => {
       });
     }
 
-    // Calculate pricing
-    const productPrice = product.price * orderQuantity;
-    const orderDiscount = discount !== undefined ? Number(discount) : 0;
-    const orderTax = tax !== undefined ? Number(tax) : 0;
-    const orderShippingCharges = shippingCharges !== undefined ? Number(shippingCharges) : 0;
+    const discountResult = await calculateDiscounts({
+      productId,
+      quantity: orderQuantity,
+      promoCode: promoCode || null,
+      userId,
+    });
 
-    // Validate pricing values
-    if (orderDiscount < 0 || orderTax < 0 || orderShippingCharges < 0) {
+    if (!discountResult.success) {
       return res.status(400).json({
         success: false,
-        message: 'Discount, tax, and shipping charges must be non-negative values',
+        message: discountResult.error,
       });
     }
 
-    const totalAmount = productPrice - orderDiscount + orderTax + orderShippingCharges;
+    const { pricing, appliedDiscountIds, appliedPromoCode } = discountResult;
 
-    if (totalAmount < 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid pricing calculation',
-      });
-    }
+    const orderTax = calculateTax(pricing.discountedAmount);
 
-    // Generate unique order ID using UUID
+    const orderShippingCharges = calculateShipping(pricing.discountedAmount, orderQuantity);
+
+    const totalAmount = pricing.discountedAmount + orderTax + orderShippingCharges;
+
     const orderId = `ORD-${uuidv4()}`;
 
-    // Create order
     const order = new Order({
       orderId,
       userId,
@@ -119,19 +118,29 @@ export const createOrder = async (req, res) => {
       addressId,
       address: deliveryAddress.address,
       pricing: {
-        productPrice,
-        discount: orderDiscount,
+        productPrice: pricing.subtotal,
+        discounts: pricing.discounts,
         tax: orderTax,
         shippingCharges: orderShippingCharges,
         totalAmount,
       },
+      appliedDiscountIds: appliedDiscountIds || [],
+      promoCodeId: appliedPromoCode ? appliedPromoCode._id : null,
       status: 'pending',
       isOrdered: true,
       ...(color && { color }),
     });
 
     await order.save();
+
+    if (appliedPromoCode) {
+      await PromoCode.findByIdAndUpdate(appliedPromoCode._id, {
+        $inc: { usageCount: 1 },
+      });
+    }
+
     await order.populate('productId', 'name price colors productDiscount');
+    await order.populate('promoCodeId', 'code discountType discountValue');
 
     res.status(201).json({
       success: true,
