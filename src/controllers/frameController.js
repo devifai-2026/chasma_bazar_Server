@@ -143,11 +143,59 @@ export const deleteFrame = async (req, res) => {
 
 export const getAllFrames = async (req, res) => {
   try {
-    const frames = await Frame.find({ isDeleted: false })
-      .populate('appliedDiscounts', 'name discountType discountValue');
+    const {
+      name,
+      shape,
+      material,
+      color,
+      size,
+      minPrice,
+      maxPrice,
+      page = 1,
+      limit = 20
+    } = req.query;
+
+    const filter = { isDeleted: false };
+    if (name) {
+      filter.name = { $regex: name, $options: 'i' };
+    }
+    if (shape) {
+      filter.shape = shape;
+    }
+    if (material) {
+      filter.material = material;
+    }
+    if (color) {
+      filter.color = { $regex: color, $options: 'i' };
+    }
+    if (size) {
+      filter.size = size;
+    }
+    if (minPrice || maxPrice) {
+      filter.price = {};
+      if (minPrice) {
+        filter.price.$gte = Number(minPrice);
+      }
+      if (maxPrice) {
+        filter.price.$lte = Number(maxPrice);
+      }
+    }
+
+    const frames = await Frame.find(filter)
+      .populate('appliedDiscounts', 'name discountType discountValue')
+      .sort({ createdAt: -1 })
+      .limit(limit * 1)
+      .skip((page - 1) * limit)
+      .exec();
+
+    const count = await Frame.countDocuments(filter);
 
     res.status(200).json({
       success: true,
+      count: frames.length,
+      total: count,
+      totalPages: Math.ceil(count / limit),
+      currentPage: parseInt(page),
       data: frames,
     });
   } catch (error) {
