@@ -128,8 +128,13 @@
             },
             "url": {
               "raw": "{{base_url}}/auth/signup",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "signup"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
             }
           }
         },
@@ -149,8 +154,13 @@
             },
             "url": {
               "raw": "{{base_url}}/auth/signup",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "signup"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "signup"
+              ]
             }
           }
         },
@@ -170,8 +180,13 @@
             },
             "url": {
               "raw": "{{base_url}}/auth/login",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "login"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "login"
+              ]
             }
           }
         },
@@ -191,8 +206,13 @@
             },
             "url": {
               "raw": "{{base_url}}/auth/refresh-token",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "refresh-token"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "refresh-token"
+              ]
             }
           }
         },
@@ -212,8 +232,13 @@
             },
             "url": {
               "raw": "{{base_url}}/auth/logout",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "logout"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "logout"
+              ]
             }
           }
         },
@@ -233,8 +258,13 @@
             },
             "url": {
               "raw": "{{base_url}}/auth/logout-all",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "logout-all"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "logout-all"
+              ]
             }
           }
         },
@@ -250,8 +280,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/auth/sessions",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "sessions"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "sessions"
+              ]
             }
           }
         },
@@ -267,8 +302,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/auth/sessions/{{session_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "sessions", "{{session_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "auth",
+                "sessions",
+                "{{session_id}}"
+              ]
             }
           }
         }
@@ -284,8 +325,12 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/products?page=1&limit=10",
-              "host": ["{{base_url}}"],
-              "path": ["products"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -356,8 +401,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/products/{{product_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["products", "{{product_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "{{product_id}}"
+              ]
             }
           }
         },
@@ -381,8 +431,12 @@
             },
             "url": {
               "raw": "{{base_url}}/products",
-              "host": ["{{base_url}}"],
-              "path": ["products"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products"
+              ]
             }
           }
         },
@@ -406,8 +460,13 @@
             },
             "url": {
               "raw": "{{base_url}}/products/{{product_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["products", "{{product_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "{{product_id}}"
+              ]
             }
           }
         },
@@ -423,8 +482,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/products/{{product_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["products", "{{product_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "products",
+                "{{product_id}}"
+              ]
             }
           }
         }
@@ -453,8 +517,12 @@
             },
             "url": {
               "raw": "{{base_url}}/cart",
-              "host": ["{{base_url}}"],
-              "path": ["cart"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart"
+              ]
             }
           }
         },
@@ -470,8 +538,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/cart",
-              "host": ["{{base_url}}"],
-              "path": ["cart"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart"
+              ]
             }
           }
         },
@@ -487,8 +559,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/cart/summary",
-              "host": ["{{base_url}}"],
-              "path": ["cart", "summary"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart",
+                "summary"
+              ]
             }
           }
         },
@@ -512,8 +589,13 @@
             },
             "url": {
               "raw": "{{base_url}}/cart/{{cart_item_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["cart", "{{cart_item_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart",
+                "{{cart_item_id}}"
+              ]
             }
           }
         },
@@ -529,8 +611,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/cart/{{cart_item_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["cart", "{{cart_item_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart",
+                "{{cart_item_id}}"
+              ]
             }
           }
         },
@@ -546,8 +633,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/cart",
-              "host": ["{{base_url}}"],
-              "path": ["cart"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "cart"
+              ]
             }
           }
         }
@@ -576,8 +667,12 @@
             },
             "url": {
               "raw": "{{base_url}}/orders",
-              "host": ["{{base_url}}"],
-              "path": ["orders"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders"
+              ]
             }
           }
         },
@@ -593,8 +688,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/orders",
-              "host": ["{{base_url}}"],
-              "path": ["orders"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders"
+              ]
             }
           }
         },
@@ -610,8 +709,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/orders/{{order_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["orders", "{{order_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "{{order_id}}"
+              ]
             }
           }
         },
@@ -635,8 +739,14 @@
             },
             "url": {
               "raw": "{{base_url}}/orders/{{order_id}}/cancel",
-              "host": ["{{base_url}}"],
-              "path": ["orders", "{{order_id}}", "cancel"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "{{order_id}}",
+                "cancel"
+              ]
             }
           }
         },
@@ -660,8 +770,14 @@
             },
             "url": {
               "raw": "{{base_url}}/orders/{{order_id}}/status",
-              "host": ["{{base_url}}"],
-              "path": ["orders", "{{order_id}}", "status"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "{{order_id}}",
+                "status"
+              ]
             }
           }
         },
@@ -677,8 +793,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/orders/admin/all",
-              "host": ["{{base_url}}"],
-              "path": ["orders", "admin", "all"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "orders",
+                "admin",
+                "all"
+              ]
             }
           }
         }
@@ -707,8 +829,12 @@
             },
             "url": {
               "raw": "{{base_url}}/wishlist",
-              "host": ["{{base_url}}"],
-              "path": ["wishlist"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wishlist"
+              ]
             }
           }
         },
@@ -724,8 +850,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/wishlist",
-              "host": ["{{base_url}}"],
-              "path": ["wishlist"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wishlist"
+              ]
             }
           }
         },
@@ -741,8 +871,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/wishlist/check/{{product_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["wishlist", "check", "{{product_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wishlist",
+                "check",
+                "{{product_id}}"
+              ]
             }
           }
         },
@@ -758,8 +894,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/wishlist/{{wishlist_item_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["wishlist", "{{wishlist_item_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "wishlist",
+                "{{wishlist_item_id}}"
+              ]
             }
           }
         }
@@ -788,8 +929,12 @@
             },
             "url": {
               "raw": "{{base_url}}/reviews",
-              "host": ["{{base_url}}"],
-              "path": ["reviews"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews"
+              ]
             }
           }
         },
@@ -813,8 +958,13 @@
             },
             "url": {
               "raw": "{{base_url}}/reviews/{{review_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["reviews", "{{review_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews",
+                "{{review_id}}"
+              ]
             }
           }
         },
@@ -830,8 +980,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/reviews/{{review_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["reviews", "{{review_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews",
+                "{{review_id}}"
+              ]
             }
           }
         },
@@ -842,8 +997,14 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/reviews/product/{{product_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["reviews", "product", "{{product_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews",
+                "product",
+                "{{product_id}}"
+              ]
             }
           }
         },
@@ -859,8 +1020,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/reviews/user/all",
-              "host": ["{{base_url}}"],
-              "path": ["reviews", "user", "all"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews",
+                "user",
+                "all"
+              ]
             }
           }
         },
@@ -871,8 +1038,14 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/reviews/random/good",
-              "host": ["{{base_url}}"],
-              "path": ["reviews", "random", "good"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "reviews",
+                "random",
+                "good"
+              ]
             }
           }
         }
@@ -901,8 +1074,12 @@
             },
             "url": {
               "raw": "{{base_url}}/ratings",
-              "host": ["{{base_url}}"],
-              "path": ["ratings"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ratings"
+              ]
             }
           }
         },
@@ -926,8 +1103,13 @@
             },
             "url": {
               "raw": "{{base_url}}/ratings/{{rating_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["ratings", "{{rating_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ratings",
+                "{{rating_id}}"
+              ]
             }
           }
         },
@@ -943,8 +1125,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/ratings/{{rating_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["ratings", "{{rating_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ratings",
+                "{{rating_id}}"
+              ]
             }
           }
         },
@@ -955,8 +1142,14 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/ratings/product/{{product_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["ratings", "product", "{{product_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ratings",
+                "product",
+                "{{product_id}}"
+              ]
             }
           }
         },
@@ -972,8 +1165,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/ratings/user/all",
-              "host": ["{{base_url}}"],
-              "path": ["ratings", "user", "all"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "ratings",
+                "user",
+                "all"
+              ]
             }
           }
         }
@@ -989,8 +1188,12 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/companies",
-              "host": ["{{base_url}}"],
-              "path": ["companies"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies"
+              ]
             }
           }
         },
@@ -1001,8 +1204,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/companies/{{company_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["companies", "{{company_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies",
+                "{{company_id}}"
+              ]
             }
           }
         },
@@ -1026,8 +1234,12 @@
             },
             "url": {
               "raw": "{{base_url}}/companies",
-              "host": ["{{base_url}}"],
-              "path": ["companies"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies"
+              ]
             }
           }
         },
@@ -1051,8 +1263,13 @@
             },
             "url": {
               "raw": "{{base_url}}/companies/{{company_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["companies", "{{company_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies",
+                "{{company_id}}"
+              ]
             }
           }
         },
@@ -1068,8 +1285,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/companies/{{company_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["companies", "{{company_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "companies",
+                "{{company_id}}"
+              ]
             }
           }
         }
@@ -1085,8 +1307,12 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/frames",
-              "host": ["{{base_url}}"],
-              "path": ["frames"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "frames"
+              ]
             }
           }
         },
@@ -1097,8 +1323,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/frames/{{frame_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["frames", "{{frame_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "frames",
+                "{{frame_id}}"
+              ]
             }
           }
         },
@@ -1122,8 +1353,12 @@
             },
             "url": {
               "raw": "{{base_url}}/frames",
-              "host": ["{{base_url}}"],
-              "path": ["frames"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "frames"
+              ]
             }
           }
         },
@@ -1147,8 +1382,13 @@
             },
             "url": {
               "raw": "{{base_url}}/frames/{{frame_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["frames", "{{frame_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "frames",
+                "{{frame_id}}"
+              ]
             }
           }
         },
@@ -1164,8 +1404,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/frames/{{frame_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["frames", "{{frame_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "frames",
+                "{{frame_id}}"
+              ]
             }
           }
         }
@@ -1194,8 +1439,12 @@
             },
             "url": {
               "raw": "{{base_url}}/payments",
-              "host": ["{{base_url}}"],
-              "path": ["payments"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments"
+              ]
             }
           }
         },
@@ -1211,8 +1460,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/payments/user/history",
-              "host": ["{{base_url}}"],
-              "path": ["payments", "user", "history"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments",
+                "user",
+                "history"
+              ]
             }
           }
         },
@@ -1228,8 +1483,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/payments/{{order_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["payments", "{{order_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments",
+                "{{order_id}}"
+              ]
             }
           }
         },
@@ -1253,8 +1513,13 @@
             },
             "url": {
               "raw": "{{base_url}}/payments/{{payment_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["payments", "{{payment_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments",
+                "{{payment_id}}"
+              ]
             }
           }
         },
@@ -1270,8 +1535,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/payments/stats",
-              "host": ["{{base_url}}"],
-              "path": ["payments", "stats"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "payments",
+                "stats"
+              ]
             }
           }
         }
@@ -1287,8 +1557,12 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/promos",
-              "host": ["{{base_url}}"],
-              "path": ["promos"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos"
+              ]
             }
           }
         },
@@ -1299,8 +1573,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/promos/search?code=SAVE10",
-              "host": ["{{base_url}}"],
-              "path": ["promos", "search"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos",
+                "search"
+              ],
               "query": [
                 {
                   "key": "code",
@@ -1317,8 +1596,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/promos/{{promo_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["promos", "{{promo_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos",
+                "{{promo_id}}"
+              ]
             }
           }
         },
@@ -1342,8 +1626,13 @@
             },
             "url": {
               "raw": "{{base_url}}/promos/apply",
-              "host": ["{{base_url}}"],
-              "path": ["promos", "apply"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos",
+                "apply"
+              ]
             }
           }
         },
@@ -1367,8 +1656,12 @@
             },
             "url": {
               "raw": "{{base_url}}/promos",
-              "host": ["{{base_url}}"],
-              "path": ["promos"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos"
+              ]
             }
           }
         },
@@ -1392,8 +1685,13 @@
             },
             "url": {
               "raw": "{{base_url}}/promos/{{promo_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["promos", "{{promo_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos",
+                "{{promo_id}}"
+              ]
             }
           }
         },
@@ -1409,8 +1707,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/promos/{{promo_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["promos", "{{promo_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "promos",
+                "{{promo_id}}"
+              ]
             }
           }
         }
@@ -1431,8 +1734,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/discounts",
-              "host": ["{{base_url}}"],
-              "path": ["discounts"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts"
+              ]
             }
           }
         },
@@ -1448,8 +1755,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/discounts/active",
-              "host": ["{{base_url}}"],
-              "path": ["discounts", "active"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts",
+                "active"
+              ]
             }
           }
         },
@@ -1465,8 +1777,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/discounts/{{discount_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["discounts", "{{discount_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts",
+                "{{discount_id}}"
+              ]
             }
           }
         },
@@ -1490,8 +1807,12 @@
             },
             "url": {
               "raw": "{{base_url}}/discounts",
-              "host": ["{{base_url}}"],
-              "path": ["discounts"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts"
+              ]
             }
           }
         },
@@ -1515,8 +1836,13 @@
             },
             "url": {
               "raw": "{{base_url}}/discounts/{{discount_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["discounts", "{{discount_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts",
+                "{{discount_id}}"
+              ]
             }
           }
         },
@@ -1532,8 +1858,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/discounts/{{discount_id}}/toggle-status",
-              "host": ["{{base_url}}"],
-              "path": ["discounts", "{{discount_id}}", "toggle-status"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts",
+                "{{discount_id}}",
+                "toggle-status"
+              ]
             }
           }
         },
@@ -1549,8 +1881,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/discounts/{{discount_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["discounts", "{{discount_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "discounts",
+                "{{discount_id}}"
+              ]
             }
           }
         }
@@ -1579,8 +1916,12 @@
             },
             "url": {
               "raw": "{{base_url}}/addresses",
-              "host": ["{{base_url}}"],
-              "path": ["addresses"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "addresses"
+              ]
             }
           }
         },
@@ -1596,8 +1937,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/addresses",
-              "host": ["{{base_url}}"],
-              "path": ["addresses"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "addresses"
+              ]
             }
           }
         },
@@ -1613,8 +1958,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/addresses/{{address_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["addresses", "{{address_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "addresses",
+                "{{address_id}}"
+              ]
             }
           }
         },
@@ -1638,8 +1988,13 @@
             },
             "url": {
               "raw": "{{base_url}}/addresses/{{address_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["addresses", "{{address_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "addresses",
+                "{{address_id}}"
+              ]
             }
           }
         },
@@ -1655,8 +2010,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/addresses/{{address_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["addresses", "{{address_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "addresses",
+                "{{address_id}}"
+              ]
             }
           }
         }
@@ -1672,8 +2032,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/banners/active",
-              "host": ["{{base_url}}"],
-              "path": ["banners", "active"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "active"
+              ]
             }
           }
         },
@@ -1684,8 +2049,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/banners/by-page?page=home",
-              "host": ["{{base_url}}"],
-              "path": ["banners", "by-page"],
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "by-page"
+              ],
               "query": [
                 {
                   "key": "page",
@@ -1702,8 +2072,13 @@
             "header": [],
             "url": {
               "raw": "{{base_url}}/banners/{{banner_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["banners", "{{banner_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "{{banner_id}}"
+              ]
             }
           }
         },
@@ -1719,8 +2094,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/banners",
-              "host": ["{{base_url}}"],
-              "path": ["banners"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners"
+              ]
             }
           }
         },
@@ -1744,8 +2123,12 @@
             },
             "url": {
               "raw": "{{base_url}}/banners",
-              "host": ["{{base_url}}"],
-              "path": ["banners"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners"
+              ]
             }
           }
         },
@@ -1769,8 +2152,13 @@
             },
             "url": {
               "raw": "{{base_url}}/banners/{{banner_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["banners", "{{banner_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "{{banner_id}}"
+              ]
             }
           }
         },
@@ -1786,8 +2174,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/banners/{{banner_id}}/toggle-status",
-              "host": ["{{base_url}}"],
-              "path": ["banners", "{{banner_id}}", "toggle-status"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "{{banner_id}}",
+                "toggle-status"
+              ]
             }
           }
         },
@@ -1803,8 +2197,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/banners/{{banner_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["banners", "{{banner_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "{{banner_id}}"
+              ]
             }
           }
         },
@@ -1820,8 +2219,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/banners/{{banner_id}}/permanent",
-              "host": ["{{base_url}}"],
-              "path": ["banners", "{{banner_id}}", "permanent"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "banners",
+                "{{banner_id}}",
+                "permanent"
+              ]
             }
           }
         }
@@ -1850,8 +2255,12 @@
             },
             "url": {
               "raw": "{{base_url}}/refunds",
-              "host": ["{{base_url}}"],
-              "path": ["refunds"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "refunds"
+              ]
             }
           }
         },
@@ -1867,8 +2276,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/refunds",
-              "host": ["{{base_url}}"],
-              "path": ["refunds"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "refunds"
+              ]
             }
           }
         },
@@ -1884,8 +2297,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/refunds/{{refund_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["refunds", "{{refund_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "refunds",
+                "{{refund_id}}"
+              ]
             }
           }
         },
@@ -1901,8 +2319,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/refunds/all/pending",
-              "host": ["{{base_url}}"],
-              "path": ["refunds", "all", "pending"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "refunds",
+                "all",
+                "pending"
+              ]
             }
           }
         },
@@ -1926,8 +2350,14 @@
             },
             "url": {
               "raw": "{{base_url}}/refunds/{{refund_id}}/approve",
-              "host": ["{{base_url}}"],
-              "path": ["refunds", "{{refund_id}}", "approve"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "refunds",
+                "{{refund_id}}",
+                "approve"
+              ]
             }
           }
         },
@@ -1951,8 +2381,14 @@
             },
             "url": {
               "raw": "{{base_url}}/refunds/{{refund_id}}/reject",
-              "host": ["{{base_url}}"],
-              "path": ["refunds", "{{refund_id}}", "reject"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "refunds",
+                "{{refund_id}}",
+                "reject"
+              ]
             }
           }
         }
@@ -1973,8 +2409,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/users",
-              "host": ["{{base_url}}"],
-              "path": ["users"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
             }
           }
         },
@@ -1990,8 +2430,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/users/statistics",
-              "host": ["{{base_url}}"],
-              "path": ["users", "statistics"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "statistics"
+              ]
             }
           }
         },
@@ -2007,8 +2452,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/users/{{user_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["users", "{{user_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
             }
           }
         },
@@ -2032,8 +2482,12 @@
             },
             "url": {
               "raw": "{{base_url}}/users",
-              "host": ["{{base_url}}"],
-              "path": ["users"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users"
+              ]
             }
           }
         },
@@ -2057,8 +2511,13 @@
             },
             "url": {
               "raw": "{{base_url}}/users/{{user_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["users", "{{user_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
             }
           }
         },
@@ -2074,8 +2533,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/users/{{user_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["users", "{{user_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}"
+              ]
             }
           }
         },
@@ -2091,8 +2555,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/users/{{user_id}}/restore",
-              "host": ["{{base_url}}"],
-              "path": ["users", "{{user_id}}", "restore"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "users",
+                "{{user_id}}",
+                "restore"
+              ]
             }
           }
         }
@@ -2113,8 +2583,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/browsing-history/{{product_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["browsing-history", "{{product_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "browsing-history",
+                "{{product_id}}"
+              ]
             }
           }
         },
@@ -2130,8 +2605,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/browsing-history",
-              "host": ["{{base_url}}"],
-              "path": ["browsing-history"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "browsing-history"
+              ]
             }
           }
         },
@@ -2147,8 +2626,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/browsing-history/stats/most-viewed",
-              "host": ["{{base_url}}"],
-              "path": ["browsing-history", "stats", "most-viewed"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "browsing-history",
+                "stats",
+                "most-viewed"
+              ]
             }
           }
         },
@@ -2164,8 +2649,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/browsing-history/stats/recently-viewed",
-              "host": ["{{base_url}}"],
-              "path": ["browsing-history", "stats", "recently-viewed"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "browsing-history",
+                "stats",
+                "recently-viewed"
+              ]
             }
           }
         },
@@ -2181,8 +2672,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/browsing-history/stats/statistics",
-              "host": ["{{base_url}}"],
-              "path": ["browsing-history", "stats", "statistics"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "browsing-history",
+                "stats",
+                "statistics"
+              ]
             }
           }
         },
@@ -2198,8 +2695,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/browsing-history/{{product_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["browsing-history", "{{product_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "browsing-history",
+                "{{product_id}}"
+              ]
             }
           }
         },
@@ -2215,8 +2717,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/browsing-history",
-              "host": ["{{base_url}}"],
-              "path": ["browsing-history"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "browsing-history"
+              ]
             }
           }
         }
@@ -2245,8 +2751,12 @@
             },
             "url": {
               "raw": "{{base_url}}/used-promos",
-              "host": ["{{base_url}}"],
-              "path": ["used-promos"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "used-promos"
+              ]
             }
           }
         },
@@ -2262,8 +2772,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/used-promos/history",
-              "host": ["{{base_url}}"],
-              "path": ["used-promos", "history"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "used-promos",
+                "history"
+              ]
             }
           }
         },
@@ -2279,8 +2794,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/used-promos/stats",
-              "host": ["{{base_url}}"],
-              "path": ["used-promos", "stats"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "used-promos",
+                "stats"
+              ]
             }
           }
         },
@@ -2296,8 +2816,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/used-promos/check/{{promo_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["used-promos", "check", "{{promo_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "used-promos",
+                "check",
+                "{{promo_id}}"
+              ]
             }
           }
         },
@@ -2313,8 +2839,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/used-promos/order/{{order_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["used-promos", "order", "{{order_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "used-promos",
+                "order",
+                "{{order_id}}"
+              ]
             }
           }
         },
@@ -2330,8 +2862,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/used-promos/admin/popular",
-              "host": ["{{base_url}}"],
-              "path": ["used-promos", "admin", "popular"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "used-promos",
+                "admin",
+                "popular"
+              ]
             }
           }
         },
@@ -2347,8 +2885,14 @@
             ],
             "url": {
               "raw": "{{base_url}}/used-promos/admin/report",
-              "host": ["{{base_url}}"],
-              "path": ["used-promos", "admin", "report"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "used-promos",
+                "admin",
+                "report"
+              ]
             }
           }
         }
@@ -2369,8 +2913,12 @@
             ],
             "url": {
               "raw": "{{base_url}}/sessions",
-              "host": ["{{base_url}}"],
-              "path": ["sessions"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sessions"
+              ]
             }
           }
         },
@@ -2386,8 +2934,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/sessions/stats",
-              "host": ["{{base_url}}"],
-              "path": ["sessions", "stats"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sessions",
+                "stats"
+              ]
             }
           }
         },
@@ -2403,8 +2956,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/sessions/{{session_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["sessions", "{{session_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sessions",
+                "{{session_id}}"
+              ]
             }
           }
         },
@@ -2420,8 +2978,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/sessions/{{session_id}}",
-              "host": ["{{base_url}}"],
-              "path": ["sessions", "{{session_id}}"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sessions",
+                "{{session_id}}"
+              ]
             }
           }
         },
@@ -2437,8 +3000,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/sessions/revoke-others",
-              "host": ["{{base_url}}"],
-              "path": ["sessions", "revoke-others"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sessions",
+                "revoke-others"
+              ]
             }
           }
         },
@@ -2454,8 +3022,13 @@
             ],
             "url": {
               "raw": "{{base_url}}/sessions/revoke-all",
-              "host": ["{{base_url}}"],
-              "path": ["sessions", "revoke-all"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sessions",
+                "revoke-all"
+              ]
             }
           }
         },
@@ -2471,8 +3044,113 @@
             ],
             "url": {
               "raw": "{{base_url}}/sessions/cleanup",
-              "host": ["{{base_url}}"],
-              "path": ["sessions", "cleanup"]
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "sessions",
+                "cleanup"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Dashboard",
+      "item": [
+        {
+          "name": "Get Overview Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard/stats",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "dashboard",
+                "stats"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Revenue Chart",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard/revenue?range=12m",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "dashboard",
+                "revenue"
+              ],
+              "query": [
+                {
+                  "key": "range",
+                  "value": "12m",
+                  "description": "12m, 30d, etc."
+                }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Recent Users",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard/users",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "dashboard",
+                "users"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Get Performance Metrics",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{admin_token}}"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/dashboard/performance",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "dashboard",
+                "performance"
+              ]
             }
           }
         }

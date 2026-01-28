@@ -126,8 +126,8 @@ export const createOrder = async (req, res) => {
       },
       appliedDiscountIds: appliedDiscountIds || [],
       promoCodeId: appliedPromoCode ? appliedPromoCode._id : null,
+
       status: 'pending',
-      isOrdered: true,
       ...(color && { color }),
     });
 
@@ -268,7 +268,6 @@ export const updateOrderStatus = async (req, res) => {
       id,
       {
         status,
-        isDelivered: status === 'delivered',
       },
       { new: true }
     );

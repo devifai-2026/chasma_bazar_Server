@@ -22,6 +22,7 @@ import usedPromoCodeRoutes from './routes/usedPromoCodeRoutes.js';
 import sessionManagementRoutes from './routes/sessionManagementRoutes.js';
 import bannerRoutes from './routes/bannerRoutes.js';
 import userRoutes from './routes/userRoute.js';
+import dashboardRoutes from './routes/dashboardRoutes.js';
 
 const app = express();
 
@@ -93,6 +94,7 @@ app.use('/api/used-promos', usedPromoCodeRoutes);
 app.use('/api/sessions', sessionManagementRoutes);
 app.use('/api/banners', bannerRoutes);
 app.use('/api/users', userRoutes);
+app.use('/api/dashboard', dashboardRoutes);
 
 // Error handling middleware
 app.use((err, req, res, next) => {

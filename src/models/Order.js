@@ -98,18 +98,7 @@ const orderSchema = new mongoose.Schema(
     actualDeliveryDate: {
       type: Date,
     },
-    isOrdered: {
-      type: Boolean,
-      default: true,
-    },
-    isDelivered: {
-      type: Boolean,
-      default: false,
-    },
-    isCancelled: {
-      type: Boolean,
-      default: false,
-    },
+
     cancellationReason: {
       type: String,
     },
