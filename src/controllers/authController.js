@@ -1,5 +1,6 @@
 import User from '../models/User.js';
 import Session from '../models/Session.js';
+import crypto from 'crypto';
 import {
   generateTokenPair,
   verifyAccessToken,
@@ -264,5 +265,121 @@ export const revokeSession = async (req, res) => {
     return successResponse(res, 200, 'Session revoked successfully');
   } catch (error) {
     return serverError(res, 'Failed to revoke session', error.message);
+  }
+};
+
+export const forgotPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+
+    if (!email) {
+      return badRequestError(res, 'Email is required');
+    }
+
+    const emailValidation = validateEmail(email);
+    if (!emailValidation.isValid) {
+      return badRequestError(res, emailValidation.error);
+    }
+
+    const user = await User.findOne({ email: email.toLowerCase(), isDeleted: false });
+
+    if (!user) {
+      return badRequestError(res, 'No account found with this email');
+    }
+
+    if (user.accountStatus !== 'active') {
+      return badRequestError(res, 'Account is not active. Please contact support.');
+    }
+
+    const resetToken = /** @type {any} */ (user).generateResetPasswordToken();
+    await user.save();
+
+
+    return successResponse(res, 200, 'Password reset token generated', {
+      resetToken,
+      message: 'Use this token with the reset-password endpoint',
+      expiresIn: '15 minutes',
+    });
+  } catch (error) {
+    return serverError(res, 'Failed to generate reset token', error.message);
+  }
+};
+
+export const resetPassword = async (req, res) => {
+  try {
+    const { token, newPassword } = req.body;
+
+    if (!token || !newPassword) {
+      return badRequestError(res, 'Token and new password are required');
+    }
+
+    if (newPassword.length < 6) {
+      return badRequestError(res, 'Password must be at least 6 characters');
+    }
+
+    const hashedToken = crypto
+      .createHash('sha256')
+      .update(token)
+      .digest('hex');
+
+    const user = await User.findOne({
+      resetPasswordToken: hashedToken,
+      resetPasswordExpire: { $gt: Date.now() },
+      isDeleted: false,
+    });
+
+    if (!user) {
+      return badRequestError(res, 'Invalid or expired reset token');
+    }
+
+    user.password = newPassword;
+    user.resetPasswordToken = undefined;
+    user.resetPasswordExpire = undefined;
+    await user.save();
+
+    // Revoke all existing sessions for security
+    await revokeAllUserSessions(user._id, 'password_reset');
+
+    return successResponse(res, 200, 'Password reset successfully. Please login with your new password.');
+  } catch (error) {
+    return serverError(res, 'Failed to reset password', error.message);
+  }
+};
+
+export const changePassword = async (req, res) => {
+  try {
+    const userId = req.user.userId;
+    const { currentPassword, newPassword } = req.body;
+
+    if (!currentPassword || !newPassword) {
+      return badRequestError(res, 'Current password and new password are required');
+    }
+
+    if (newPassword.length < 6) {
+      return badRequestError(res, 'New password must be at least 6 characters');
+    }
+
+    if (currentPassword === newPassword) {
+      return badRequestError(res, 'New password must be different from current password');
+    }
+
+    const user = await User.findById(userId).select('+password');
+
+    if (!user || user.isDeleted) {
+      return badRequestError(res, 'User not found');
+    }
+
+    const isPasswordValid = await user.comparePassword(currentPassword);
+
+    if (!isPasswordValid) {
+      return unauthorizedError(res, 'Current password is incorrect');
+    }
+
+    user.password = newPassword;
+    await user.save();
+
+    return successResponse(res, 200, 'Password changed successfully');
+  } catch (error) {
+    return serverError(res, 'Failed to change password', error.message);
   }
 };
