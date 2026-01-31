@@ -57,6 +57,10 @@ const sessionSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    pageViews: {
+      type: Number,
+      default: 0,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -91,6 +95,7 @@ sessionSchema.methods.isValid = function () {
 
 sessionSchema.methods.updateActivity = function () {
   this.lastActivityAt = new Date();
+  this.pageViews = (this.pageViews || 0) + 1;
   return this.save();
 };
 
