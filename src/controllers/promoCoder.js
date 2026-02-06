@@ -117,7 +117,7 @@ const promoCodeController = {
       const promoCode = await PromoCode.findById(id)
         .populate('applicableProducts', 'name')
         .populate('applicableFrames', 'name')
-        .populate('applicableCompanies', 'description');
+        .populate('applicableCompanies', 'name');
 
       if (!promoCode) {
         return notFoundError(res, 'Promo code not found');
