@@ -387,6 +387,7 @@ export const getAllProducts = async (req, res) => {
         { name: searchRegex },
         { description: searchRegex },
         { tags: { $in: [searchRegex] } },
+        { sku: searchRegex },
       ];
     }
 
