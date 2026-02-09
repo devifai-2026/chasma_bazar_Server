@@ -308,12 +308,25 @@ export const getAllOrders = async (req, res) => {
 
     const count = await Order.countDocuments(filter);
 
+    const statusCounts = await Order.aggregate([
+      { $match: { isDeleted: false } },
+      { $group: { _id: '$status', count: { $sum: 1 } } },
+    ]);
+
+    const statusMap = statusCounts.reduce((acc, curr) => {
+      acc[curr._id] = curr.count;
+      return acc;
+    }, {});
+
+    statusMap.total = Object.values(statusMap).reduce((a, b) => a + b, 0);
+
     res.status(200).json({
       success: true,
       data: orders,
       totalPages: Math.ceil(count / limit),
       currentPage: page,
       total: count,
+      statusCounts: statusMap,
     });
   } catch (error) {
     res.status(500).json({
