@@ -146,6 +146,18 @@ const productSchema = new mongoose.Schema(
       enum: ['children', 'teens', 'adults', 'seniors', 'all'],
       default: 'all',
     },
+    prescriptionType: {
+      type: String,
+      enum: ['single', 'bifocal', 'progressive', 'computer'],
+    },
+    supportedPowers: {
+      type: String,
+      enum: ['low', 'medium', 'high', 'veryhigh'],
+    },
+    productType: {
+      type: String,
+      enum: ['regular', 'premium', 'designer', 'sports'],
+    },
     isDeleted: {
       type: Boolean,
       default: false,

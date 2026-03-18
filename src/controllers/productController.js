@@ -183,6 +183,9 @@ export const getAllProducts = async (req, res) => {
       maxPrice,
       gender,
       material,
+      prescriptionType,
+      supportedPowers,
+      productType,
       search,
       page = 1,
       limit = 10,
@@ -283,6 +286,57 @@ export const getAllProducts = async (req, res) => {
       });
     }
 
+    // Validate prescriptionType
+    const validPrescriptionTypes = ['single', 'bifocal', 'progressive', 'computer'];
+    if (prescriptionType) {
+      const types = prescriptionType.includes(',')
+        ? prescriptionType.split(',').map((t) => t.trim())
+        : [prescriptionType.trim()];
+
+      const invalidTypes = types.filter((t) => !validPrescriptionTypes.includes(t));
+
+      if (invalidTypes.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid prescriptionType(s): ${invalidTypes.join(', ')}. Valid types are: ${validPrescriptionTypes.join(', ')}`,
+        });
+      }
+    }
+
+    // Validate supportedPowers
+    const validSupportedPowers = ['low', 'medium', 'high', 'veryhigh'];
+    if (supportedPowers) {
+      const powers = supportedPowers.includes(',')
+        ? supportedPowers.split(',').map((p) => p.trim())
+        : [supportedPowers.trim()];
+
+      const invalidPowers = powers.filter((p) => !validSupportedPowers.includes(p));
+
+      if (invalidPowers.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid supportedPowers: ${invalidPowers.join(', ')}. Valid powers are: ${validSupportedPowers.join(', ')}`,
+        });
+      }
+    }
+
+    // Validate productType
+    const validProductTypes = ['regular', 'premium', 'designer', 'sports'];
+    if (productType) {
+      const types = productType.includes(',')
+        ? productType.split(',').map((t) => t.trim())
+        : [productType.trim()];
+
+      const invalidProductTypes = types.filter((t) => !validProductTypes.includes(t));
+
+      if (invalidProductTypes.length > 0) {
+        return res.status(400).json({
+          success: false,
+          message: `Invalid productType(s): ${invalidProductTypes.join(', ')}. Valid types are: ${validProductTypes.join(', ')}`,
+        });
+      }
+    }
+
     // ========== Build Filter Query ==========
 
     const filter = { isDeleted: false };
@@ -297,10 +351,45 @@ export const getAllProducts = async (req, res) => {
         : company.trim();
     }
 
+    // Frame type filter - find frames by rim type (full, half, rimless)
     if (frameType) {
-      filter.frameType = frameType.includes(',')
-        ? { $in: frameType.split(',').map((id) => id.trim()) }
-        : frameType.trim();
+      const Frame = mongoose.model('Frame');
+      const rimTypes = frameType.includes(',')
+        ? frameType.split(',').map((t) => t.trim())
+        : [frameType.trim()];
+
+      const matchingFrames = await Frame.find({
+        rimType: { $in: rimTypes },
+        isDeleted: false,
+      }).select('_id');
+
+      const frameIds = matchingFrames.map((frame) => frame._id);
+      if (frameIds.length > 0) {
+        filter.frameType = { $in: frameIds };
+      } else {
+        // No frames match the rim type, return empty result
+        return res.status(200).json({
+          success: true,
+          data: [],
+          totalPages: 0,
+          currentPage: pageNum,
+          total: 0,
+          filters: {
+            category: categoryValue,
+            company,
+            frameType,
+            frameShape,
+            frameSize,
+            priceRange: { min: minPrice, max: maxPrice },
+            gender,
+            material,
+            prescriptionType,
+            supportedPowers,
+            productType,
+            search,
+          },
+        });
+      }
     }
     if (frameShape) {
       const Frame = mongoose.model('Frame');
@@ -343,6 +432,9 @@ export const getAllProducts = async (req, res) => {
             priceRange: { min: minPrice, max: maxPrice },
             gender,
             material,
+            prescriptionType,
+            supportedPowers,
+            productType,
             search,
           },
         });
@@ -379,6 +471,36 @@ export const getAllProducts = async (req, res) => {
 
       filter.material =
         materials.length > 1 ? { $in: materials } : materials[0];
+    }
+
+    // Prescription type filter
+    if (prescriptionType) {
+      const types = prescriptionType.includes(',')
+        ? prescriptionType.split(',').map((t) => t.trim())
+        : [prescriptionType.trim()];
+
+      filter.prescriptionType =
+        types.length > 1 ? { $in: types } : types[0];
+    }
+
+    // Supported powers filter
+    if (supportedPowers) {
+      const powers = supportedPowers.includes(',')
+        ? supportedPowers.split(',').map((p) => p.trim())
+        : [supportedPowers.trim()];
+
+      filter.supportedPowers =
+        powers.length > 1 ? { $in: powers } : powers[0];
+    }
+
+    // Product type filter
+    if (productType) {
+      const types = productType.includes(',')
+        ? productType.split(',').map((t) => t.trim())
+        : [productType.trim()];
+
+      filter.productType =
+        types.length > 1 ? { $in: types } : types[0];
     }
 
     if (search) {
@@ -418,6 +540,9 @@ export const getAllProducts = async (req, res) => {
         priceRange: { min: minPrice, max: maxPrice },
         gender,
         material,
+        prescriptionType,
+        supportedPowers,
+        productType,
         search,
       },
     });

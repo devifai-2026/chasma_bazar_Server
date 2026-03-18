@@ -6,6 +6,10 @@ const frameSchema = new mongoose.Schema(
       type: String,
       required: [true, 'Frame name is required'],
     },
+    rimType: {
+      type: String,
+      enum: ['full', 'half', 'rimless'],
+    },
     shape: {
       type: String,
       enum: ['round', 'square', 'rectangle', 'oval', 'cat-eye', 'aviator', 'wayfarer', 'clubmaster', 'geometric', 'other'],
